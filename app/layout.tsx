@@ -9,8 +9,8 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const space = Space_Grotesk({ subsets: ['latin'], variable: '--font-space' });
 
 export const metadata: Metadata = {
-  title: 'Kunal — Creative Portfolio',
-  description: 'Freelance product designer portfolio built with Next.js',
+  title: 'Kunal - Portfolio',
+  description: 'Freelance Product Designer',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
