@@ -2,7 +2,6 @@
 import { useEffect, useRef } from 'react';
 
 export default function Footer() {
-  const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
   const email = 'contact@kunalkamde.com'; // TODO: replace with your email
   const containerRef = useRef<HTMLAnchorElement | null>(null);
   const textRef = useRef<HTMLSpanElement | null>(null);
@@ -26,17 +25,19 @@ export default function Footer() {
     // Initial fit and on events
     fitText();
     const onResize = () => fitText();
-    window.addEventListener('resize', onResize, { passive: true } as any);
+    window.addEventListener('resize', onResize, { passive: true });
     // Observe container changes for safety
     let ro: ResizeObserver | null = null;
     if (typeof ResizeObserver !== 'undefined' && containerRef.current) {
       ro = new ResizeObserver(() => fitText());
       ro.observe(containerRef.current);
     }
-    // After fonts load
-    (document as any)?.fonts?.ready?.then(() => fitText());
+    // After fonts load (if supported)
+    if (document.fonts?.ready) {
+      document.fonts.ready.then(() => fitText()).catch(() => {});
+    }
     return () => {
-      window.removeEventListener('resize', onResize as any);
+      window.removeEventListener('resize', onResize);
       ro?.disconnect();
     };
   }, [email]);

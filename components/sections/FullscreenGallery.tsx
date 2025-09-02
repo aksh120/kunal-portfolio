@@ -65,9 +65,9 @@ export default function FullscreenGallery({
     const imgs: HTMLImageElement[] = [];
     for (const p of projects) {
       if (!p?.image) continue;
-      const img = new window.Image();
+      const img = new window.Image() as HTMLImageElement & { fetchPriority?: 'high' | 'low' | 'auto' };
       img.decoding = 'async';
-      (img as any).fetchPriority = 'high';
+      img.fetchPriority = 'high';
       img.loading = 'eager';
       img.src = p.image;
       imgs.push(img);
@@ -132,23 +132,24 @@ export default function FullscreenGallery({
     };
 
     // If Lenis smooth scroll is active, stop it so it doesn't hijack wheel/touch
-    const lenis: any = (window as any).lenis;
-    const shouldResumeLenis = !!lenis && !lenis.stopped;
-    if (shouldResumeLenis) lenis.stop();
+    const lenis = window.lenis;
+    const initiallyStopped = (lenis as unknown as { stopped?: boolean } | null)?.stopped ?? undefined;
+    const shouldResumeLenis = Boolean(lenis && initiallyStopped === false);
+    if (lenis) lenis.stop();
 
     html.style.overflow = 'hidden';
     // prevent scroll chaining on root to keep scroll inside overlay
-    (html.style as any).overscrollBehavior = 'none';
+    html.style.setProperty('overscroll-behavior', 'none');
     body.style.overflow = 'hidden';
 
     window.addEventListener('keydown', onKey);
     return () => {
       window.removeEventListener('keydown', onKey);
       html.style.overflow = prev.htmlOverflow;
-      (html.style as any).overscrollBehavior = '';
+      html.style.setProperty('overscroll-behavior', '');
       body.style.overflow = prev.bodyOverflow;
       window.scrollTo(0, scrollYRef.current);
-      if (shouldResumeLenis) lenis.start();
+      if (shouldResumeLenis && lenis) lenis.start();
     };
   }, [open, onClose]);
 
@@ -176,7 +177,7 @@ export default function FullscreenGallery({
     const now = Date.now();
     if (now - wheelLockRef.current < 450) return;
     wheelLockRef.current = now;
-    const dy = (e as any).deltaY ?? e.deltaY ?? 0;
+    const dy = e.deltaY;
     if (Math.abs(dy) < 8) return;
     e.preventDefault();
     e.stopPropagation();
@@ -276,7 +277,22 @@ export default function FullscreenGallery({
             </motion.button>
 
             {/* Header */}
-            
+            {(title || subtitle) && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3, delay: 0.12 }}
+                className="absolute top-6 left-1/2 z-[90] -translate-x-1/2 text-center px-4"
+              >
+                {title && (
+                  <h3 className="text-lg md:text-xl font-semibold text-white/90 drop-shadow">{title}</h3>
+                )}
+                {subtitle && (
+                  <p className="text-xs md:text-sm text-white/60 mt-1 max-w-[80vw] md:max-w-[60vw]">{subtitle}</p>
+                )}
+              </motion.div>
+            )}
 
             {/* Slide area */}
             <div className="relative h-full w-full">

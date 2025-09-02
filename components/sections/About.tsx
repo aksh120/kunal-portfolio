@@ -3,12 +3,15 @@ import { MotionDiv, SweepLine, SectionSpotlights } from './primitives';
 
 export default function About() {
   const skills = ['Figma', 'Illustrator', 'Photoshop', 'After Effects', 'Blender', 'Framer', 'React', 'Tailwind'];
-  const scrollToId = (e: any, id: string) => {
+  const scrollToId = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
-    const target = document.querySelector(id);
-    const lenis = (window as any)?.lenis;
-    if (target && lenis) lenis.scrollTo(target, { offset: -80 });
-    else if (target) (target as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const lenis = window.lenis;
+    if (lenis) {
+      lenis.scrollTo(id, { offset: -80 });
+    } else {
+      const target = document.querySelector(id) as HTMLElement | null;
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
  
   return (

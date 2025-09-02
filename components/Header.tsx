@@ -7,6 +7,7 @@ const nav = [
   { href: '#about', label: 'ABOUT' },
   { href: '#services', label: 'SERVICES' },
   { href: '#works', label: 'WORKS' },
+  { href: '#projects', label: 'PROJECTS' },
   { href: '#achievements', label: 'ACHIEVEMENTS' },
   { href: '#contact', label: 'CONTACT' },
 ];
@@ -25,10 +26,13 @@ export default function Header() {
   const onNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (!href.startsWith('#')) return;
     e.preventDefault();
-    const target = document.querySelector(href);
-    const lenis = (window as any)?.lenis;
-    if (target && lenis) lenis.scrollTo(target, { offset: -80 });
-    else if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const lenis = window.lenis;
+    if (lenis) {
+      lenis.scrollTo(href, { offset: -80 });
+    } else {
+      const target = document.querySelector(href) as HTMLElement | null;
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
     setOpen(false);
   };
   

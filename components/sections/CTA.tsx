@@ -2,12 +2,15 @@
 import { MotionDiv, SweepLine, SectionSpotlights } from './primitives';
 
 export default function CTA() {
-  const onStartClick = (e: any) => {
+  const onStartClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    const target = document.querySelector('#contact');
-    const lenis = (window as any)?.lenis;
-    if (target && lenis) lenis.scrollTo(target, { offset: -80 });
-    else if (target) (target as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const lenis = window.lenis;
+    if (lenis) {
+      lenis.scrollTo('#contact', { offset: -80 });
+    } else {
+      const target = document.querySelector('#contact') as HTMLElement | null;
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
   return (
     <section id="cta" className="section relative">

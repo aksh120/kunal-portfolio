@@ -22,7 +22,7 @@ export default function Contact() {
       if (!res.ok) throw new Error('Failed');
       setStatus('done');
       e.currentTarget.reset();
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError('Something went wrong. Please try again.');
       setStatus('error');
     }
@@ -46,7 +46,7 @@ export default function Contact() {
               </div>
               <h4 className="mt-4 text-xl font-semibold">Get in touch</h4>
               <p className="mt-2 text-foreground/60 text-sm">
-                Drop me a line and I'll get back to you within 24 hours.
+                Drop me a line and I’ll get back to you within 24 hours.
               </p>
               
               <div className="mt-6 space-y-4">
@@ -155,7 +155,7 @@ export default function Contact() {
             <div className="relative p-8 md:p-12">
               <div className="mb-8">
                 <h4 className="text-2xl font-semibold mb-2">Start a project</h4>
-                <p className="text-foreground/60">Tell me about your project and let's make it happen.</p>
+                <p className="text-foreground/60">Tell me about your project and let’s make it happen.</p>
               </div>
 
               <form onSubmit={onSubmit} className="space-y-6" aria-busy={status === 'loading'}>

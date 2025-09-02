@@ -23,12 +23,15 @@ export default function Hero() {
     tiltY.set(0);
   };
 
-  const onCtaClick = (e: any) => {
+  const onCtaClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    const target = document.querySelector('#contact');
-    const lenis = (window as any)?.lenis;
-    if (target && lenis) lenis.scrollTo(target, { offset: -80 });
-    else if (target) (target as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const lenis = window.lenis;
+    if (lenis) {
+      lenis.scrollTo('#contact', { offset: -80 });
+    } else {
+      const target = document.querySelector('#contact') as HTMLElement | null;
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   return (
@@ -148,7 +151,7 @@ export default function Hero() {
                       src="/kunal.jpg"
                       alt="Kunal — Hero portrait"
                       fill
-                      className="object-cover object-[40%_35%]"
+                      className="object-cover object-[40%_35%] scale-x-[-1]"
                       sizes="(min-width: 1024px) 420px, (min-width: 768px) 45vw, 90vw"
                       priority
                     />
@@ -180,12 +183,6 @@ export default function Hero() {
                   </div>
                 </div>
               </motion.div>
-
-              {/* Caption chips */}
-              <div className="mt-4 flex items-center justify-between text-[12px] text-white/80">
-                <span className="px-2.5 py-1 rounded-md bg-black/50 border border-white/10">Kunal • Product Designer</span>
-                <span className="px-2.5 py-1 rounded-md bg-black/50 border border-white/10">Based in India</span>
-              </div>
             </div>
           </motion.div>
         </div>
