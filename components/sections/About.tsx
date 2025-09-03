@@ -2,7 +2,7 @@
 import { MotionDiv, SweepLine, SectionSpotlights } from './primitives';
 
 export default function About() {
-  const skills = ['Figma', 'Illustrator', 'Photoshop', 'After Effects', 'Blender', 'Framer', 'React', 'Tailwind'];
+  const skills = ['Rhino 7', 'Fusion 360', 'Keyshot', 'Illustrator', 'Photoshop', 'Figma'];
   const scrollToId = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
     const lenis = window.lenis;
@@ -47,10 +47,10 @@ export default function About() {
 
           <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] uppercase tracking-wider text-foreground/70">About Me</span>
           <h2 className="mt-4 text-3xl md:text-4xl font-extrabold leading-tight tracking-tight">
-            Design + Identity for bold brands
+          Design + Functional Aesthetics
           </h2>
           <p className="mt-4 text-foreground/70 leading-relaxed">
-            I craft distinctive brand systems and elegant product interfaces that feel effortless. My work blends clarity, restraint and craft to help startups communicate, convert and grow.
+          Product Designer in travel gear, crafting innovative, functional solutions for global brands through trend research, 3D modeling, and prototyping.
           </p>
 
           {/* Skills */}
@@ -68,22 +68,19 @@ export default function About() {
             <a href="#works" onClick={(e) => scrollToId(e, '#works')} className="px-4 py-2 rounded-lg border border-white/15 text-foreground/80 hover:text-foreground hover:border-white/30 transition">View work</a>
           </div>
 
-          
-          <p className="mt-7 text-xs text-foreground/50">Available for freelance and collaborations</p>
-
           {/* Stats */}
           <div className="mt-8 grid grid-cols-3 gap-4">
             <div className="rounded-lg bg-white/5 border border-white/10 p-4 text-center">
-              <div className="text-2xl font-extrabold">5+ </div>
-              <div className="text-xs text-foreground/60">Years</div>
+              <div className="text-2xl font-extrabold">2+ </div>
+              <div className="text-xs text-foreground/60">Years Experience</div>
             </div>
             <div className="rounded-lg bg-white/5 border border-white/10 p-4 text-center">
-              <div className="text-2xl font-extrabold">20+ </div>
+              <div className="text-2xl font-extrabold">15+ </div>
               <div className="text-xs text-foreground/60">Projects</div>
             </div>
             <div className="rounded-lg bg-white/5 border border-white/10 p-4 text-center">
-              <div className="text-2xl font-extrabold">10+ </div>
-              <div className="text-xs text-foreground/60">Clients</div>
+              <div className="text-2xl font-extrabold">3+ </div>
+              <div className="text-xs text-foreground/60">Global Brands</div>
             </div>
           </div>
         </MotionDiv>

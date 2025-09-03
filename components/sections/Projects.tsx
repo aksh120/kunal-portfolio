@@ -4,14 +4,9 @@ import SectionHeader from '@/components/SectionHeader';
 
 const projects = [
   {
-    title: 'Redluffy',
+    title: 'PENDING',
     tag: 'Branding',
-    image: 'https://i.ibb.co/spbVnF3L/Redluffy.jpg',
-  },
-  {
-    title: 'Smart Waste Management System',
-    tag: 'Branding',
-    image: 'https://i.ibb.co/8gws2TB4/Smart-waste-management-system.jpg',
+    image: 'https://i.ibb.co/FLqxFFQh/Beatcubes.jpg',
   },
   {
     title: 'Beatcubes',
@@ -19,9 +14,14 @@ const projects = [
     image: 'https://i.ibb.co/FLqxFFQh/Beatcubes.jpg',
   },
   {
-    title: 'PENDING',
+    title: 'Smart Waste Management System',
     tag: 'Branding',
-    image: 'https://i.ibb.co/FLqxFFQh/Beatcubes.jpg',
+    image: 'https://i.ibb.co/8gws2TB4/Smart-waste-management-system.jpg',
+  },
+  {
+    title: 'Redluffy',
+    tag: 'Branding',
+    image: 'https://i.ibb.co/spbVnF3L/Redluffy.jpg',
   },
 ];
 

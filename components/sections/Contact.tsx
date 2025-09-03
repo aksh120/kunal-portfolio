@@ -71,7 +71,7 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-sm font-medium">Response time</p>
+                    <p className="text-sm font-medium">Phone no.</p>
                     <p className="text-xs text-foreground/60">Usually within 24 hours</p>
                   </div>
                 </div>
@@ -84,7 +84,7 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-sm font-medium">Location</p>
+                    <p className="text-sm font-medium">Linkedin</p>
                     <p className="text-xs text-foreground/60">Remote • Global</p>
                   </div>
                 </div>
@@ -98,46 +98,37 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-sm font-medium">Availability</p>
+                    <p className="text-sm font-medium">Instagram</p>
+                    <p className="text-xs text-foreground/60">2-3 slots open</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-white/[0.03]">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-purple-500/10 text-purple-400">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M14 9V5a3 3 0 0 0-6 0v4"/>
+                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                      <circle cx="12" cy="16" r="1"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium">Behance</p>
                     <p className="text-xs text-foreground/60">2-3 slots open</p>
                   </div>
                 </div>
 
                 {/* Quick stats */}
                 <div className="my-6 border-y border-white/10 py-6 flex items-center">
-                  <div className="grid grid-cols-3 gap-4 w-full">
+                  <div className="grid grid-cols-2 gap-4 w-full">
                     <div className="flex flex-col items-center justify-center text-center">
-                      <div className="text-lg font-bold text-orange-400">5+</div>
-                      <div className="text-xs text-foreground/60">Years</div>
+                      <div className="text-lg font-bold text-orange-400">2+</div>
+                      <div className="text-xs text-foreground/60">Years Experience</div>
                     </div>
                     <div className="flex flex-col items-center justify-center text-center">
-                      <div className="text-lg font-bold text-blue-400">50+</div>
+                      <div className="text-lg font-bold text-blue-400">15+</div>
                       <div className="text-xs text-foreground/60">Projects</div>
                     </div>
-                    <div className="flex flex-col items-center justify-center text-center">
-                      <div className="text-lg font-bold text-green-400">20+</div>
-                      <div className="text-xs text-foreground/60">Clients</div>
-                    </div>
                   </div>
-                </div>
-              </div>
-
-              {/* Social links moved inside main card */}
-              <div className="mt-8">
-                <h5 className="font-medium mb-4">Connect with me</h5>
-                <div className="grid grid-cols-2 gap-3">
-                  <a href="#" className="flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.06] transition text-sm">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-blue-400">
-                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                    </svg>
-                    LinkedIn
-                  </a>
-                  <a href="https://instagram.com/kooonalll" target="_blank" className="flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.06] transition text-sm">
-                  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 48 48">
-<radialGradient id="yOrnnhliCrdS2gy~4tD8ma_Xy10Jcu1L2Su_gr1" cx="19.38" cy="42.035" r="44.899" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fd5"></stop><stop offset=".328" stop-color="#ff543f"></stop><stop offset=".348" stop-color="#fc5245"></stop><stop offset=".504" stop-color="#e64771"></stop><stop offset=".643" stop-color="#d53e91"></stop><stop offset=".761" stop-color="#cc39a4"></stop><stop offset=".841" stop-color="#c837ab"></stop></radialGradient><path fill="url(#yOrnnhliCrdS2gy~4tD8ma_Xy10Jcu1L2Su_gr1)" d="M34.017,41.99l-20,0.019c-4.4,0.004-8.003-3.592-8.008-7.992l-0.019-20	c-0.004-4.4,3.592-8.003,7.992-8.008l20-0.019c4.4-0.004,8.003,3.592,8.008,7.992l0.019,20	C42.014,38.383,38.417,41.986,34.017,41.99z"></path><radialGradient id="yOrnnhliCrdS2gy~4tD8mb_Xy10Jcu1L2Su_gr2" cx="11.786" cy="5.54" r="29.813" gradientTransform="matrix(1 0 0 .6663 0 1.849)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4168c9"></stop><stop offset=".999" stop-color="#4168c9" stop-opacity="0"></stop></radialGradient><path fill="url(#yOrnnhliCrdS2gy~4tD8mb_Xy10Jcu1L2Su_gr2)" d="M34.017,41.99l-20,0.019c-4.4,0.004-8.003-3.592-8.008-7.992l-0.019-20	c-0.004-4.4,3.592-8.003,7.992-8.008l20-0.019c4.4-0.004,8.003,3.592,8.008,7.992l0.019,20	C42.014,38.383,38.417,41.986,34.017,41.99z"></path><path fill="#fff" d="M24,31c-3.859,0-7-3.14-7-7s3.141-7,7-7s7,3.14,7,7S27.859,31,24,31z M24,19c-2.757,0-5,2.243-5,5	s2.243,5,5,5s5-2.243,5-5S26.757,19,24,19z"></path><circle cx="31.5" cy="16.5" r="1.5" fill="#fff"></circle><path fill="#fff" d="M30,37H18c-3.859,0-7-3.14-7-7V18c0-3.86,3.141-7,7-7h12c3.859,0,7,3.14,7,7v12	C37,33.86,33.859,37,30,37z M18,13c-2.757,0-5,2.243-5,5v12c0,2.757,2.243,5,5,5h12c2.757,0,5-2.243,5-5V18c0-2.757-2.243-5-5-5H18z"></path>
-</svg>
-                    Instagram
-                  </a>
                 </div>
               </div>
             </div>

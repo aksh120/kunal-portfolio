@@ -72,12 +72,12 @@ export default function Hero() {
               Available for freelance
             </div>
 
-            <h1 className="mt-6 mb-6 heading font-extrabold tracking-tight leading-[0.95] text-[12vw] md:text-[7vw] lg:text-[86px] bg-gradient-to-b from-white via-white to-white/70 bg-clip-text text-transparent">
-              Freelance Product Designer
+            <h1 className="mt-6 mb-6 heading font-extrabold tracking-tight leading-[1.06] pb-[0.04em] text-[12vw] md:text-[7vw] lg:text-[86px] bg-gradient-to-b from-white via-white to-white/70 bg-clip-text text-transparent">
+              Product Designer
             </h1>
 
             <p className="mt-5 text-white/70 max-w-xl md:max-w-2xl md:pr-6">
-              I design products and interfaces that feel effortless. Motion, systems and craft with a dash of flavor.
+            Innovative Product Designer creating user-centered solutions through Innovation, 3D modeling, prototyping, and design thinking—balancing form, function, and aesthetics.
             </p>
 
             <div className="mt-8 flex items-center md:justify-start justify-center gap-3">
