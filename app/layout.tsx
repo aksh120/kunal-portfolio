@@ -11,7 +11,7 @@ const space = Space_Grotesk({ subsets: ['latin'], variable: '--font-space' });
 
 export const metadata: Metadata = {
   title: 'Kunal Kamde - Portfolio',
-  description: 'Freelance Product Designer',
+  description: 'Product Designer',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

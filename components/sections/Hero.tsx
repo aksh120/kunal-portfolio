@@ -67,12 +67,8 @@ export default function Hero() {
             transition={{ duration: 0.6 }}
             className="md:col-span-7 text-center md:text-left"
           >
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-4 py-2 text-xs md:text-sm text-white/80 backdrop-blur">
-              <span className="inline-block h-2 w-2 rounded-full bg-[#ee4818] shadow-[0_0_12px_2px_rgba(238,72,24,0.6)]" />
-              Available for freelance
-            </div>
 
-            <h1 className="mt-6 mb-6 heading font-extrabold tracking-tight leading-[1.06] pb-[0.04em] text-[12vw] md:text-[7vw] lg:text-[86px] bg-gradient-to-b from-white via-white to-white/70 bg-clip-text text-transparent">
+            <h1 className="mb-6 heading font-extrabold tracking-tight leading-[1.06] pb-[0.04em] text-[12vw] md:text-[7vw] lg:text-[86px] bg-gradient-to-b from-white via-white to-white/70 bg-clip-text text-transparent">
               Product Designer
             </h1>
 

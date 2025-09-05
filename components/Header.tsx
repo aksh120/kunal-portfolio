@@ -2,9 +2,10 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
-const nav = [
+type NavItem = { href: string; label: string; action?: 'resume' };
+const nav: NavItem[] = [
   { href: '#home', label: 'HOME' },
-  { href: '#about', label: 'ABOUT' },
+  { href: '#about', label: 'RESUME', action: 'resume' },
   { href: '#works', label: 'WORKS' },
   { href: '#projects', label: 'PROJECTS' },
   { href: '#achievements', label: 'ACHIEVEMENTS' },
@@ -22,7 +23,8 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
   
-  const onNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const onNavClick = (e: React.MouseEvent<HTMLAnchorElement>, item: NavItem) => {
+    const { href, action } = item;
     if (!href.startsWith('#')) return;
     e.preventDefault();
     const lenis = window.lenis;
@@ -33,6 +35,23 @@ export default function Header() {
       if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     setOpen(false);
+    // Special behavior: after scrolling to About, open resume PDF in a new tab.
+    // To avoid popup blockers, open a blank tab synchronously here, then navigate it after a short delay.
+    if (action === 'resume') {
+      const OPEN_DELAY_MS = 800; // allow scroll animation to complete before navigating
+      const tab = window.open('', '_blank');
+      if (tab) {
+        try { tab.opener = null as any; } catch {}
+        window.setTimeout(() => {
+          try { tab.location.href = '/kunal.pdf'; } catch (_) {}
+        }, OPEN_DELAY_MS);
+      } else {
+        // Fallback if the browser blocks opening a blank tab
+        window.setTimeout(() => {
+          try { window.open('/kunal.pdf', '_blank'); } catch (_) {}
+        }, OPEN_DELAY_MS);
+      }
+    }
   };
   
   return (
@@ -47,7 +66,7 @@ export default function Header() {
         <div className="flex items-center justify-between py-6">
           <a 
             href="#home" 
-            onClick={(e) => onNavClick(e, '#home')} 
+            onClick={(e) => onNavClick(e, { href: '#home', label: 'HOME' })} 
             className="font-bold tracking-[0.2em] text-lg text-white"
           >
             KUNAL
@@ -58,7 +77,7 @@ export default function Header() {
               <a 
                 key={n.href} 
                 href={n.href} 
-                onClick={(e) => onNavClick(e, n.href)} 
+                onClick={(e) => onNavClick(e, n)} 
                 className="text-[15px] font-medium tracking-wide text-white/80 hover:text-white transition-colors"
               >
                 {n.label}
@@ -86,7 +105,7 @@ export default function Header() {
                 <a 
                   key={n.href} 
                   href={n.href} 
-                  onClick={(e) => onNavClick(e, n.href)} 
+                  onClick={(e) => onNavClick(e, n)} 
                   className="text-white/80 hover:text-white transition-colors"
                 >
                   {n.label}
