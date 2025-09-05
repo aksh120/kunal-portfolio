@@ -19,8 +19,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className="dark">
       <body className={`${inter.variable} ${space.variable} font-sans bg-background`}>        
         <LenisProvider>
+          <Header />
           <AppShell splashMinDuration={3000} oncePerSession={false}>
-            <Header />
             <main>{children}</main>
             {/* <Footer /> */}
           </AppShell>
