@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     console.log('[contact] new submission', { name, email, message });
 
     return NextResponse.json({ ok: true });
-  } catch (e) {
+  } catch {
     return NextResponse.json({ ok: false }, { status: 500 });
   }
 }

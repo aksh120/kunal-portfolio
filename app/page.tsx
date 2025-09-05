@@ -5,7 +5,6 @@ import Projects from '@/components/sections/Projects';
 import InternshipWork from '@/components/sections/InternshipWork';
 import Achievements from '@/components/sections/Achievements';
 import About from '@/components/sections/About';
-import CTA from '@/components/sections/CTA';
 import Contact from '@/components/sections/Contact';
 
 export default function Page() {

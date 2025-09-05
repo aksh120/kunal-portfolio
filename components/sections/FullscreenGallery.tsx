@@ -4,7 +4,6 @@ import { useEffect, useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
-import type { WheelEvent as ReactWheelEvent, TouchEvent as ReactTouchEvent } from 'react';
 
 export type GalleryProject = {
   title: string;
@@ -27,8 +26,8 @@ function deriveBrand(title: string): string {
 export default function FullscreenGallery({
   open,
   onClose,
-  title,
-  subtitle,
+  title: _title,
+  subtitle: _subtitle,
   projects,
 }: {
   open: boolean;

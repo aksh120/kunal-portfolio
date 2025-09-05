@@ -36,19 +36,18 @@ export default function Header() {
     }
     setOpen(false);
     // Special behavior: after scrolling to About, open resume PDF in a new tab.
-    // To avoid popup blockers, open a blank tab synchronously here, then navigate it after a short delay.
+    // To avoid popup blockers, open a blank tab synchronously (with noopener) and navigate it after a short delay.
     if (action === 'resume') {
       const OPEN_DELAY_MS = 800; // allow scroll animation to complete before navigating
-      const tab = window.open('', '_blank');
+      const tab = window.open('', '_blank', 'noopener,noreferrer');
       if (tab) {
-        try { tab.opener = null as any; } catch {}
         window.setTimeout(() => {
-          try { tab.location.href = '/kunal.pdf'; } catch (_) {}
+          try { tab.location.href = '/kunal.pdf'; } catch {}
         }, OPEN_DELAY_MS);
       } else {
         // Fallback if the browser blocks opening a blank tab
         window.setTimeout(() => {
-          try { window.open('/kunal.pdf', '_blank'); } catch (_) {}
+          try { window.open('/kunal.pdf', '_blank', 'noopener,noreferrer'); } catch {}
         }, OPEN_DELAY_MS);
       }
     }

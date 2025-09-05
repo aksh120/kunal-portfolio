@@ -22,7 +22,7 @@ export default function Contact() {
       if (!res.ok) throw new Error('Failed');
       setStatus('done');
       e.currentTarget.reset();
-    } catch (err: unknown) {
+    } catch {
       setError('Something went wrong. Please try again.');
       setStatus('error');
     }
