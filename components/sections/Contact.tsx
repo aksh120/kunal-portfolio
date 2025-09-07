@@ -33,7 +33,7 @@ export default function Contact() {
       <SectionSpotlights />
       <SectionHeader title="Contact Me" align="center" />
 
-      <div className="grid lg:grid-cols-5 gap-12 items-stretch">
+      <div className="grid lg:grid-cols-5 gap-8 md:gap-12 items-stretch">
         {/* Left side - Contact info */}
         <div className="lg:col-span-2 flex flex-col">
           <MotionDiv y={20} delay={0.1} className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] p-8 backdrop-blur-xl flex-1 flex flex-col">
@@ -50,72 +50,72 @@ export default function Contact() {
               </p>
               
               <div className="mt-6 space-y-4">
-                <a href="mailto:hello@kunal.com" className="group flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] transition-all">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-500/10 text-orange-400">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <a href="mailto:kunalkamde74@gmail.com" className="group flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] transition-all">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-orange-500/10 text-orange-400">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                       <polyline points="22,6 12,13 2,6"/>
                     </svg>
                   </div>
                   <div>
                     <p className="text-sm font-medium">Email</p>
-                    <p className="text-xs text-foreground/60 group-hover:text-foreground/80 transition">contact@kunalkamde.com</p>
+                    <p className="text-xs text-foreground/60 group-hover:text-foreground/80 transition">kunalkamde74@gmail.com</p>
                   </div>
                 </a>
                 
-                <div className="flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-white/[0.03]">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/10 text-blue-400">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <circle cx="12" cy="12" r="10"/>
-                      <polyline points="12,6 12,12 16,14"/>
+                <a href="tel:+917447345852" className="group flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] transition-all">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-blue-500/10 text-blue-400">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.62-3.37 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.08 5.18 2 2 0 0 1 4.06 3h3a2 2 0 0 1 2 1.72c.08.96.3 1.9.67 2.81a2 2 0 0 1-.45 2.11L8.09 10.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.37 1.85.59 2.81.67A2 2 0 0 1 22 16.92z"/>
                     </svg>
                   </div>
                   <div>
                     <p className="text-sm font-medium">Phone no.</p>
-                    <p className="text-xs text-foreground/60">Usually within 24 hours</p>
+                    <p className="text-xs text-foreground/60 group-hover:text-foreground/80 transition">+91 7447345852</p>
                   </div>
-                </div>
+                </a>
 
-                <div className="flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-white/[0.03]">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-500/10 text-green-400">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                      <circle cx="12" cy="10" r="3"/>
+                <a href="https://www.linkedin.com/in/kunal-kamde-06309b222" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] transition-all">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[#0A66C2]/10 text-[#0A66C2]">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                      <circle cx="8" cy="8" r="1"/>
+                      <path d="M8 11v7"/>
+                      <path d="M12 11v7"/>
+                      <path d="M12 13c0-1.5 1.1-2.5 2.5-2.5S17 11.5 17 13v5"/>
                     </svg>
                   </div>
                   <div>
-                    <p className="text-sm font-medium">Linkedin</p>
-                    <p className="text-xs text-foreground/60">Remote • Global</p>
+                    <p className="text-sm font-medium">LinkedIn</p>
+                    <p className="text-xs text-foreground/60 group-hover:text-foreground/80 transition">https://www.linkedin.com/in/kunal-kamde-06309b222</p>
                   </div>
-                </div>
+                </a>
 
-                <div className="flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-white/[0.03]">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-purple-500/10 text-purple-400">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M14 9V5a3 3 0 0 0-6 0v4"/>
-                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                      <circle cx="12" cy="16" r="1"/>
+                <a href="https://www.instagram.com/owl_mystry" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] transition-all">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#F58529]/20 via-[#DD2A7B]/20 to-[#515BD4]/20 text-[#DD2A7B]">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                      <rect x="3" y="3" width="18" height="18" rx="5" ry="5"/>
+                      <circle cx="12" cy="12" r="4"/>
+                      <circle cx="17" cy="7" r="1.2"/>
                     </svg>
                   </div>
                   <div>
                     <p className="text-sm font-medium">Instagram</p>
-                    <p className="text-xs text-foreground/60">2-3 slots open</p>
+                    <p className="text-xs text-foreground/60 group-hover:text-foreground/80 transition">https://www.instagram.com/owl_mystry</p>
                   </div>
-                </div>
+                </a>
 
-                <div className="flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-white/[0.03]">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-purple-500/10 text-purple-400">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M14 9V5a3 3 0 0 0-6 0v4"/>
-                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                      <circle cx="12" cy="16" r="1"/>
+                <a href="https://www.behance.net/kunalkamde" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] transition-all">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[#1769FF]/10 text-[#1769FF]">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                      <text x="12" y="16.5" textAnchor="middle" fontSize="14" fontWeight="700" fontFamily="Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif">Be</text>
                     </svg>
                   </div>
                   <div>
                     <p className="text-sm font-medium">Behance</p>
-                    <p className="text-xs text-foreground/60">2-3 slots open</p>
+                    <p className="text-xs text-foreground/60 group-hover:text-foreground/80 transition">https://www.behance.net/kunalkamde</p>
                   </div>
-                </div>
+                </a>
 
                 {/* Quick stats */}
                 <div className="my-6 border-y border-white/10 py-6 flex items-center">
@@ -222,7 +222,7 @@ export default function Contact() {
                   />
                 </div>
 
-                <div className="flex items-center justify-between pt-4">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-4">
                   <div className="flex items-center gap-4">
                     <button 
                       type="submit" 

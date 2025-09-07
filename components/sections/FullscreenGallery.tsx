@@ -80,17 +80,19 @@ export default function FullscreenGallery({
 
     const prev = {
       bodyOverflow: body.style.overflow,
-      bodyPosition: body.style.position,
-      bodyTop: body.style.top,
-      bodyWidth: body.style.width,
       htmlOverflow: html.style.overflow,
+      overscroll: html.style.getPropertyValue('overscroll-behavior'),
     };
 
-    // If Lenis smooth scroll is active, stop it so it doesn't hijack wheel/touch
+    // Pause Lenis while overlay is open; resume only if we actually stopped it
     const lenis = window.lenis;
-    const initiallyStopped = (lenis as unknown as { stopped?: boolean } | null)?.stopped ?? undefined;
-    const shouldResumeLenis = Boolean(lenis && initiallyStopped === false);
-    if (lenis) lenis.stop();
+    let didStopLenis = false;
+    try {
+      if (lenis) {
+        lenis.stop();
+        didStopLenis = true;
+      }
+    } catch {}
 
     html.style.overflow = 'hidden';
     // prevent scroll chaining on root to keep scroll inside overlay
@@ -101,10 +103,12 @@ export default function FullscreenGallery({
     return () => {
       window.removeEventListener('keydown', onKey);
       html.style.overflow = prev.htmlOverflow;
-      html.style.setProperty('overscroll-behavior', '');
+      if (prev.overscroll) html.style.setProperty('overscroll-behavior', prev.overscroll); else html.style.removeProperty('overscroll-behavior');
       body.style.overflow = prev.bodyOverflow;
       window.scrollTo(0, scrollYRef.current);
-      if (shouldResumeLenis && lenis) lenis.start();
+      try {
+        if (didStopLenis && lenis) lenis.start();
+      } catch {}
     };
   }, [open, onClose, selectedProject]);
 

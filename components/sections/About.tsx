@@ -32,9 +32,6 @@ export default function About() {
             onContextMenu={(e) => e.preventDefault()}
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20" />
-          <div className="absolute top-4 right-4">
-            <span className="px-3 py-1 rounded-full bg-black/50 border border-white/10 text-[14px] text-white/80 backdrop-blur">Available for freelance</span>
-          </div>
           <div className="absolute bottom-4 left-4">
             <span className="px-3 py-1 rounded-md bg-black/60 border border-white/10 text-[16px] text-white/80 backdrop-blur">Kunal • Product Designer</span>
           </div>

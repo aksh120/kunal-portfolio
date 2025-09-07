@@ -58,7 +58,7 @@ export default function Hero() {
       {/* Cursor spotlight removed per request */}
 
       {/* Content */}
-      <div className="relative z-[2] container-max pt-28 md:pt-36 pb-16 mx-auto">
+      <div className="relative z-[2] mb-[50px] container-max pt-28 md:pt-36 pb-16 mx-auto">
         <div className="grid md:grid-cols-12 gap-8 items-center">
           {/* Left: copy */}
           <motion.div
@@ -107,7 +107,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
-            <div className="relative w-full max-w-md ml-auto">
+            <div className="relative w-full max-w-md mx-auto md:ml-auto">
               {/* Halo */}
               <div className="absolute -inset-10 -z-10 blur-3xl opacity-70" style={{
                 background:

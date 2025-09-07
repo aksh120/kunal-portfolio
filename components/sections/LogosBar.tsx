@@ -1,71 +1,83 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import Image from "next/image";
+
+type Logo = { src?: string; label: string };
+
+
 export default function LogosBar() {
+  const [logos, setLogos] = useState<Logo[]>([]);
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      const base = "/software_logos/";
+      const desired: { label: string; candidates: string[] }[] = [
+        { label: "Rhino 7", candidates: ["rhino-7.png", "rhino7.png", "rhino.png"] },
+        { label: "Fusion 360", candidates: ["fusion-360.png", "fusion360.png", "fusion_360.png", "fusion.png"] },
+        { label: "Keyshot", candidates: ["keyshot.png", "key-shot.png"] },
+        { label: "Illustrator", candidates: ["illustrator.png", "adobe-illustrator.png", "ai.png"] },
+        { label: "Photoshop", candidates: ["photoshop.png", "adobe-photoshop.png", "ps.png"] },
+        { label: "Figma", candidates: ["figma.png"] },
+      ];
+
+      const results: Logo[] = [];
+      for (let i = 0; i < desired.length; i++) {
+        const item = desired[i];
+        let foundSrc: string | undefined;
+        // 1) Try named candidates
+        for (const file of item.candidates) {
+          const url = base + file;
+          try {
+            const res = await fetch(url, { method: "HEAD" });
+            if (res.ok) { foundSrc = url; break; }
+          } catch {}
+        }
+        // 2) Fallback to numbered assets (logo_1.png .. logo_6.png) in requested order
+        if (!foundSrc) {
+          const numbered = `logo_${i + 1}.png`;
+          const url = base + numbered;
+          try {
+            const res = await fetch(url, { method: "HEAD" });
+            if (res.ok) foundSrc = url;
+          } catch {}
+        }
+        results.push({ label: item.label, src: foundSrc });
+      }
+      if (mounted) setLogos(results);
+    })();
+    return () => { mounted = false; };
+  }, []);
+
   return (
     <section aria-label="Design tools" className="section">
       <div className="container-max">
         <div className="relative mx-auto max-w-5xl">
           <div className="rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur p-6 md:p-8">
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6 items-center justify-items-center">
-              {/* Figma */}
-              <div className="flex flex-col items-center gap-2">
-                <div className="h-12 w-12" aria-hidden="true">
-                  <svg viewBox="0 0 48 48" className="h-12 w-12">
-                    <path d="M18 6h6a6 6 0 010 12h-6z" fill="#F24E1E"/>
-                    <path d="M24 18h6a6 6 0 010 12h-6z" fill="#1ABCFE"/>
-                    <path d="M24 30a6 6 0 11-12 0 6 6 0 0112 0z" fill="#0ACF83"/>
-                    <path d="M18 6h6a6 6 0 016 6 6 6 0 01-6 6h-6z" fill="#FF7262" opacity=".9"/>
-                    <path d="M18 18h6a6 6 0 01-6 6h0a6 6 0 010-12z" fill="#A259FF"/>
-                  </svg>
+              {logos.map((l, i) => (
+                <div key={(l.src || l.label) + i} className="flex flex-col items-center gap-2">
+                  <div className="relative h-12 w-12 rounded-[10px] bg-white/5 ring-1 ring-white/10 overflow-hidden flex items-center justify-center">
+                    {l.src ? (
+                      <Image
+                        src={l.src}
+                        alt={l.label}
+                        fill
+                        sizes="48px"
+                        className="object-contain p-1.5"
+                        unoptimized
+                        priority={i < 6}
+                      />
+                    ) : (
+                      <span className="text-white/90 font-semibold text-[13px]">
+                        {l.label.split(" ").map(w => w[0]).join("").slice(0,3)}
+                      </span>
+                    )}
+                  </div>
+                  <span className="text-xs text-foreground/70 truncate max-w-[12ch]" title={l.label}>{l.label}</span>
                 </div>
-                <span className="text-xs text-foreground/70">Figma</span>
-              </div>
-
-              {/* Illustrator */}
-              <div className="flex flex-col items-center gap-2">
-                <div className="h-12 w-12 rounded-[10px] bg-[#300] ring-1 ring-white/10 flex items-center justify-center" aria-hidden="true">
-                  <span className="text-[#FF9A00] font-bold text-lg">Ai</span>
-                </div>
-                <span className="text-xs text-foreground/70">Illustrator</span>
-              </div>
-
-              {/* Photoshop */}
-              <div className="flex flex-col items-center gap-2">
-                <div className="h-12 w-12 rounded-[10px] bg-[#001E36] ring-1 ring-white/10 flex items-center justify-center" aria-hidden="true">
-                  <span className="text-[#31A8FF] font-bold text-lg">Ps</span>
-                </div>
-                <span className="text-xs text-foreground/70">Photoshop</span>
-              </div>
-
-              {/* After Effects */}
-              <div className="flex flex-col items-center gap-2">
-                <div className="h-12 w-12 rounded-[10px] bg-[#2E004B] ring-1 ring-white/10 flex items-center justify-center" aria-hidden="true">
-                  <span className="text-[#D291FF] font-bold text-lg">Ae</span>
-                </div>
-                <span className="text-xs text-foreground/70">After Effects</span>
-              </div>
-
-              {/* Blender */}
-              <div className="flex flex-col items-center gap-2">
-                <div className="h-12 w-12 rounded-[10px] bg-white/10 ring-1 ring-white/10 flex items-center justify-center" aria-hidden="true">
-                  <svg viewBox="0 0 64 64" className="h-8 w-8" fill="none">
-                    <path d="M27 20l11 6-16 1 12 8" stroke="#F5792A" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-                    <circle cx="42" cy="36" r="8" fill="#F5792A"/>
-                    <circle cx="42" cy="36" r="4" fill="#2C384A"/>
-                  </svg>
-                </div>
-                <span className="text-xs text-foreground/70">Blender</span>
-              </div>
-
-              {/* Framer */}
-              <div className="flex flex-col items-center gap-2">
-                <div className="h-12 w-12 rounded-[10px] bg-black ring-1 ring-white/10 flex items-center justify-center" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" className="h-7 w-7" fill="white">
-                    <path d="M5 3h14v6H12l7 7H5v-6h7L5 3z"/>
-                  </svg>
-                </div>
-                <span className="text-xs text-foreground/70">Framer</span>
-              </div>
+              ))}
             </div>
           </div>
         </div>

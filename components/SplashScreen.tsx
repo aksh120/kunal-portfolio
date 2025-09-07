@@ -108,9 +108,9 @@ export default function SplashScreen({ onDone, minDuration = 1500 }: { onDone: (
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.6 }}
-          className="text-center text-white/60 tracking-widest text-[11px] md:text-xs"
+          className="mt-3 md:mt-4 text-center text-white/60 tracking-widest text-[11px] md:text-xs"
         >
-          PRODUCT DESIGNER • MOTION • SYSTEMS
+          Design Thinking, 3D modeling, Innovation
         </motion.div>
       </div>
 

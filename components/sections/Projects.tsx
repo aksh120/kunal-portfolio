@@ -5,22 +5,22 @@ import SectionHeader from '@/components/SectionHeader';
 const projects = [
   {
     title: 'PENDING',
-    tag: 'Branding',
+    tag: 'Product Design',
     image: 'https://i.ibb.co/FLqxFFQh/Beatcubes.jpg',
   },
   {
     title: 'Beatcubes',
-    tag: 'Branding',
+    tag: 'Product Design',
     image: 'https://i.ibb.co/FLqxFFQh/Beatcubes.jpg',
   },
   {
     title: 'Smart Waste Management System',
-    tag: 'Branding',
+    tag: 'Product Design',
     image: 'https://i.ibb.co/8gws2TB4/Smart-waste-management-system.jpg',
   },
   {
     title: 'Redluffy',
-    tag: 'Branding',
+    tag: 'Transportation Design',
     image: 'https://i.ibb.co/spbVnF3L/Redluffy.jpg',
   },
 ];
@@ -72,7 +72,7 @@ export default function Projects() {
             <div className="absolute inset-x-0 bottom-0 p-4">
               <div className="flex items-center justify-between rounded-xl border border-white/10 bg-black/40 px-4 py-3 backdrop-blur-md transition-colors duration-300 group-hover:border-white/20">
                 <h2 className="font-semibold tracking-tight">{p.title}</h2>
-                <span className="inline-flex items-center gap-1 text-s text-white/80">
+                <span className="inline-flex items-center gap-1 text-sm text-white/80">
                   View
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-80">
                     <path d="M7 17L17 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>

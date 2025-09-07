@@ -12,7 +12,7 @@ export default function SectionHeader({
   className?: string;
 }) {
   const alignClass = align === 'center' ? 'text-center' : 'text-left';
-  const wrapClass = noWrap ? 'whitespace-nowrap' : '';
+  const wrapClass = noWrap ? 'md:whitespace-nowrap' : '';
   const sizeClass = noWrap
     ? 'text-[8vw] md:text-[6.5vw] lg:text-[120px]'
     : 'text-[12vw] md:text-[9vw] lg:text-[140px]';
