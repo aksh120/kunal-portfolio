@@ -14,7 +14,7 @@ export default function SectionHeader({
   const alignClass = align === 'center' ? 'text-center' : 'text-left';
   const wrapClass = noWrap ? 'md:whitespace-nowrap' : '';
   const sizeClass = noWrap
-    ? 'text-[8vw] md:text-[6.5vw] lg:text-[120px]'
+    ? 'text-[16vw] md:text-[9vw] lg:text-[140px]'
     : 'text-[14vw] md:text-[9vw] lg:text-[140px]';
 
   // Insert a mobile-only line break after the first word when there are 2+ words

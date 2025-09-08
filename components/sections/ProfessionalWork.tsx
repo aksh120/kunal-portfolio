@@ -32,7 +32,7 @@ export default function ProfessionalWork() {
   const [open, setOpen] = useState(false);
   return (
     <section id="works" className="section relative">
-      <SectionHeader title="Professional Work" align="center" />
+      <SectionHeader title="Professional Work" align="center" noWrap />
       <SectionSpotlights />
       <div className="container-max">
         <MotionDiv

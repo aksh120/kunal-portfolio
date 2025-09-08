@@ -70,8 +70,7 @@ export default function About() {
             <div className="rounded-lg bg-white/5 border border-white/10 p-4 text-center">
               <div className="text-2xl font-extrabold">2+ </div>
               <div className="text-xs text-foreground/60">
-                <span className="block md:hidden">Years<br/>Experience</span>
-                <span className="hidden md:inline">Years Experience</span>
+                <span className="">Years</span>
               </div>
             </div>
             <div className="rounded-lg bg-white/5 border border-white/10 p-4 text-center">

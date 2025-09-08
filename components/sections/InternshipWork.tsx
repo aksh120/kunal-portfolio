@@ -32,7 +32,7 @@ export default function InternshipWork() {
   const [open, setOpen] = useState(false);
   return (
     <section id="internship" className="section relative">
-      <SectionHeader title="Internship Work" align="center" className="pb-2"/>
+      <SectionHeader title="Internship Work" align="center" noWrap className="pb-2"/>
       <SectionSpotlights />
       <div className="container-max">
         <MotionDiv
@@ -58,7 +58,7 @@ export default function InternshipWork() {
           {/* Content */}
           <div className="relative px-8 py-16 md:px-16 md:py-24">
             <div className="mx-auto max-w-3xl text-center">
-              <h3 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-3">Internship Work</h3>
+              <h3 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-3">Internship<br className="md:hidden" /> Work</h3>
               <p className="text-foreground/70">Hands-on projects built while interning across teams and tools.</p>
               <div className="mt-8 inline-flex items-center gap-2 rounded-xl border border-white/15 bg-black/40 px-4 py-2 text-sm backdrop-blur">
                 <span className="opacity-80">View {projects.length} projects</span>

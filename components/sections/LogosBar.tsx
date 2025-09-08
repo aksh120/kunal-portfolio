@@ -14,12 +14,12 @@ export default function LogosBar() {
     (async () => {
       const base = "/software_logos/";
       const desired: { label: string; candidates: string[] }[] = [
-        { label: "Rhino 7", candidates: ["rhino-7.png", "rhino7.png", "rhino.png"] },
-        { label: "Fusion 360", candidates: ["fusion-360.png", "fusion360.png", "fusion_360.png", "fusion.png"] },
-        { label: "Keyshot", candidates: ["keyshot.png", "key-shot.png"] },
-        { label: "Illustrator", candidates: ["illustrator.png", "adobe-illustrator.png", "ai.png"] },
-        { label: "Photoshop", candidates: ["photoshop.png", "adobe-photoshop.png", "ps.png"] },
-        { label: "Figma", candidates: ["figma.png"] },
+        { label: "Rhino 7", candidates: [""] },
+        { label: "Fusion 360", candidates: [""] },
+        { label: "Keyshot", candidates: [""] },
+        { label: "Illustrator", candidates: [""] },
+        { label: "Photoshop", candidates: [""] },
+        { label: "Figma", candidates: [""] },
       ];
 
       const results: Logo[] = [];
