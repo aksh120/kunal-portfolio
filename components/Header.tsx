@@ -69,11 +69,11 @@ export default function Header() {
         }`}
       >
       <div className="container-max">
-        <div className="flex items-center justify-between py-4 md:py-6">
+        <div className="flex items-center justify-between py-4 md:py-6 px-2 sm:px-0">
           <a 
             href="#home" 
             onClick={(e) => onNavClick(e, { href: '#home', label: 'HOME' })} 
-            className="font-bold tracking-[0.2em] text-lg text-white"
+            className="font-extrabold tracking-[0.2em] text-white/90"
           >
             KUNAL
           </a>

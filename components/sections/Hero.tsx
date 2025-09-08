@@ -68,7 +68,7 @@ export default function Hero() {
             className="md:col-span-7 text-center md:text-left"
           >
 
-            <h1 className="mb-6 heading font-extrabold tracking-tight leading-[1.06] pb-[0.04em] text-[12vw] md:text-[7vw] lg:text-[86px] bg-gradient-to-b from-white via-white to-white/70 bg-clip-text text-transparent">
+            <h1 className="mb-6 heading font-extrabold tracking-tight leading-[1.06] pb-[0.04em] text-[15vw] sm:text-[13vw] md:text-[7vw] lg:text-[86px] bg-gradient-to-b from-white via-white to-white/70 bg-clip-text text-transparent">
               Product Designer
             </h1>
 

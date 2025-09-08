@@ -153,7 +153,7 @@ export default function ResumeModal({ open, onClose }: { open: boolean; onClose:
 
               {/* Footer */}
               <div className="flex items-center justify-between gap-3 px-4 md:px-6 py-3 border-t border-white/10 bg-black/40">
-                <p className="text-xs text-white/50">If the PDF doesn't load, use the "Open in new tab" button.</p>
+                <p className="text-xs text-white/50">If the PDF doesn&apos;t load, use the &quot;Open in new tab&quot; button.</p>
                 <a
                   href="/kunal.pdf"
                   download

@@ -33,10 +33,10 @@ export default function Contact() {
       <SectionSpotlights />
       <SectionHeader title="Contact Me" align="center" />
 
-      <div className="grid lg:grid-cols-5 gap-8 md:gap-12 items-stretch">
+      <div className="grid lg:grid-cols-5 gap-6 md:gap-8 lg:gap-12 items-stretch">
         {/* Left side - Contact info */}
         <div className="lg:col-span-2 flex flex-col">
-          <MotionDiv y={20} delay={0.1} className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] p-8 backdrop-blur-xl flex-1 flex flex-col">
+          <MotionDiv y={20} delay={0.1} className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] p-6 md:p-8 backdrop-blur-xl flex-1 flex flex-col">
             <SweepLine position="top" color="orange" />
             <div className="absolute -top-20 -right-20 h-40 w-40 rounded-full bg-orange-500/20 blur-2xl" />
             <div className="relative flex-1 flex flex-col justify-center">
@@ -44,12 +44,12 @@ export default function Contact() {
                 <div className="h-2 w-2 rounded-full bg-orange-400 animate-pulse" />
                 Available for work
               </div>
-              <h4 className="mt-4 text-xl font-semibold">Get in touch</h4>
-              <p className="mt-2 text-foreground/60 text-sm">
+              <h4 className="mt-4 text-lg md:text-xl font-semibold">Get in touch</h4>
+              <p className="mt-2 text-foreground/60 text-sm leading-relaxed">
                 Drop me a line and I’ll get back to you within 24 hours.
               </p>
               
-              <div className="mt-6 space-y-4">
+              <div className="mt-6 space-y-3">
                 <a href="mailto:kunalkamde74@gmail.com" className="group flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] transition-all">
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-orange-500/10 text-orange-400">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -57,9 +57,9 @@ export default function Contact() {
                       <polyline points="22,6 12,13 2,6"/>
                     </svg>
                   </div>
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <p className="text-sm font-medium">Email</p>
-                    <p className="text-xs text-foreground/60 group-hover:text-foreground/80 transition">kunalkamde74@gmail.com</p>
+                    <p className="text-xs text-foreground/60 group-hover:text-foreground/80 transition break-all">kunalkamde74@gmail.com</p>
                   </div>
                 </a>
                 
@@ -69,7 +69,7 @@ export default function Contact() {
                       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.62-3.37 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.08 5.18 2 2 0 0 1 4.06 3h3a2 2 0 0 1 2 1.72c.08.96.3 1.9.67 2.81a2 2 0 0 1-.45 2.11L8.09 10.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.37 1.85.59 2.81.67A2 2 0 0 1 22 16.92z"/>
                     </svg>
                   </div>
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <p className="text-sm font-medium">Phone no.</p>
                     <p className="text-xs text-foreground/60 group-hover:text-foreground/80 transition">+91 7447345852</p>
                   </div>
@@ -85,9 +85,9 @@ export default function Contact() {
                       <path d="M12 13c0-1.5 1.1-2.5 2.5-2.5S17 11.5 17 13v5"/>
                     </svg>
                   </div>
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <p className="text-sm font-medium">LinkedIn</p>
-                    <p className="text-xs text-foreground/60 group-hover:text-foreground/80 transition">https://www.linkedin.com/in/kunal-kamde-06309b222</p>
+                    <p className="text-xs text-foreground/60 group-hover:text-foreground/80 transition break-all">linkedin.com/in/kunal-kamde-06309b222</p>
                   </div>
                 </a>
 
@@ -99,9 +99,9 @@ export default function Contact() {
                       <circle cx="17" cy="7" r="1.2"/>
                     </svg>
                   </div>
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <p className="text-sm font-medium">Instagram</p>
-                    <p className="text-xs text-foreground/60 group-hover:text-foreground/80 transition">https://www.instagram.com/owl_mystry</p>
+                    <p className="text-xs text-foreground/60 group-hover:text-foreground/80 transition break-all">instagram.com/owl_mystry</p>
                   </div>
                 </a>
 
@@ -111,9 +111,9 @@ export default function Contact() {
                       <text x="12" y="16.5" textAnchor="middle" fontSize="14" fontWeight="700" fontFamily="Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif">Be</text>
                     </svg>
                   </div>
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <p className="text-sm font-medium">Behance</p>
-                    <p className="text-xs text-foreground/60 group-hover:text-foreground/80 transition">https://www.behance.net/kunalkamde</p>
+                    <p className="text-xs text-foreground/60 group-hover:text-foreground/80 transition break-all">behance.net/kunalkamde</p>
                   </div>
                 </a>
 
@@ -143,9 +143,9 @@ export default function Contact() {
             <div className="absolute -top-40 -left-40 h-80 w-80 rounded-full bg-gradient-to-r from-orange-500/10 to-pink-500/10 blur-3xl" />
             <div className="absolute -bottom-40 -right-40 h-80 w-80 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 blur-3xl" />
             
-            <div className="relative p-8 md:p-12">
+            <div className="relative p-6 md:p-8 lg:p-12">
               <div className="mb-8">
-                <h4 className="text-2xl font-semibold mb-2">Start a project</h4>
+                <h4 className="text-xl md:text-2xl font-semibold mb-2">Start a project</h4>
                 <p className="text-foreground/60">Tell me about your project and let’s make it happen.</p>
               </div>
 
