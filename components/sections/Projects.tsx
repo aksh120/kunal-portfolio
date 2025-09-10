@@ -1,8 +1,19 @@
+"use client";
+
 import Image from 'next/image';
+import { useState } from 'react';
 import { MotionDiv, SweepLine, SectionSpotlights } from './primitives';
 import SectionHeader from '@/components/SectionHeader';
+import PdfModal from '@/components/PdfModal';
 
-const projects = [
+type ProjectItem = {
+  title: string;
+  tag: string;
+  image: string;
+  pdf?: string;
+};
+
+const projects: ProjectItem[] = [
   {
     title: 'PENDING',
     tag: 'Product Design',
@@ -12,20 +23,25 @@ const projects = [
     title: 'Beatcubes',
     tag: 'Product Design',
     image: 'https://i.ibb.co/FLqxFFQh/Beatcubes.jpg',
+    pdf: '/Beatcubes.pdf',
   },
   {
     title: 'Smart Waste Management System',
     tag: 'Product Design',
     image: 'https://i.ibb.co/8gws2TB4/Smart-waste-management-system.jpg',
+    pdf: '/Smart waste management system.pdf',
   },
   {
     title: 'Redluffy',
     tag: 'Transportation Design',
     image: 'https://i.ibb.co/spbVnF3L/Redluffy.jpg',
+    pdf: '/Redluffy.pdf',
   },
 ];
 
 export default function Projects() {
+  const [pdfSrc, setPdfSrc] = useState<string | null>(null);
+  const [pdfTitle, setPdfTitle] = useState<string>('Document');
   return (
     <section id="projects" className="section relative">
       <SectionHeader title="Projects" align="center" />
@@ -34,10 +50,25 @@ export default function Projects() {
         {projects.map((p, i) => (
           <MotionDiv
             key={p.title}
-            className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition-all duration-300 will-change-transform hover:-translate-y-1 hover:shadow-[0_24px_80px_rgba(0,0,0,0.55)]"
+            className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition-all duration-300 will-change-transform hover:-translate-y-1 hover:shadow-[0_24px_80px_rgba(0,0,0,0.55)] ${p.pdf ? 'cursor-pointer' : ''}`}
             y={16}
             delay={i * 0.03}
             whileHover={{ scale: 1.01 }}
+            onClick={() => {
+              if (!p.pdf) return;
+              setPdfSrc(p.pdf);
+              setPdfTitle(p.title);
+            }}
+            role={p.pdf ? 'button' : undefined}
+            tabIndex={p.pdf ? 0 : undefined}
+            onKeyDown={(e) => {
+              if (!p.pdf) return;
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setPdfSrc(p.pdf);
+                setPdfTitle(p.title);
+              }
+            }}
           >
             <SweepLine position="top" color="orange" />
             {/* Image */}
@@ -84,6 +115,7 @@ export default function Projects() {
           </MotionDiv>
         ))}
       </div>
+      <PdfModal open={!!pdfSrc} onClose={() => setPdfSrc(null)} src={pdfSrc ?? '/Beatcubes.pdf'} title={pdfTitle} />
     </section>
   );
 }

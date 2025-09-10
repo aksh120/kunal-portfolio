@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
+import PdfModal from '@/components/PdfModal';
 
 export type GalleryProject = {
   title: string;
@@ -11,6 +12,7 @@ export type GalleryProject = {
   image: string;
   logo?: string; // optional brand logo image URL
   brand?: string; // optional short brand name
+  pdf?: string; // optional pdf source to open in viewer
 };
 
 function deriveBrand(title: string): string {
@@ -38,6 +40,8 @@ export default function FullscreenGallery({
 }) {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
   const [failed, setFailed] = useState<Set<number>>(new Set());
+  const [pdfSrc, setPdfSrc] = useState<string | null>(null);
+  const [pdfTitle, setPdfTitle] = useState<string>('Document');
   const scrollYRef = useRef(0);
   const wrapRef = useRef<HTMLDivElement | null>(null);
 
@@ -125,6 +129,7 @@ export default function FullscreenGallery({
 
   return createPortal(
     (
+      <>
       <AnimatePresence>
         {open && (
           <motion.div
@@ -210,7 +215,22 @@ export default function FullscreenGallery({
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.5, ease: 'easeOut' }}
-                    className="relative overflow-hidden rounded-3xl border border-white/10 bg-black/40 shadow-[0_8px_30px_rgba(0,0,0,0.35)]"
+                    className="relative overflow-hidden rounded-3xl border border-white/10 bg-black/40 shadow-[0_8px_30px_rgba(0,0,0,0.35)] cursor-pointer"
+                    onClick={() => {
+                      const src = project.pdf ?? '/THSS25 Luggage.pdf';
+                      setPdfSrc(src);
+                      setPdfTitle(deriveBrand(project.title));
+                    }}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        const src = project.pdf ?? '/THSS25 Luggage.pdf';
+                        setPdfSrc(src);
+                        setPdfTitle(deriveBrand(project.title));
+                      }
+                    }}
                   >
                     <div className="relative aspect-[16/9] md:aspect-[21/9]">
                       <Image
@@ -246,7 +266,9 @@ export default function FullscreenGallery({
           {/* No detail modal in scroll list mode */}
         </motion.div>
       )}
-    </AnimatePresence>
+      </AnimatePresence>
+      <PdfModal open={!!pdfSrc} onClose={() => setPdfSrc(null)} src={pdfSrc ?? '/THSS25 Luggage.pdf'} title={pdfTitle} />
+      </>
     ),
     portalTarget
   );
