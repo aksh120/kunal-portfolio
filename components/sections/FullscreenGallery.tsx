@@ -28,8 +28,8 @@ function deriveBrand(title: string): string {
 export default function FullscreenGallery({
   open,
   onClose,
-  title: _title,
-  subtitle: _subtitle,
+  title,
+  subtitle,
   projects,
 }: {
   open: boolean;
@@ -194,15 +194,23 @@ export default function FullscreenGallery({
               transition={{ duration: 0.3, delay: 0.1 }}
               className="sticky top-6 z-[90] mx-6 flex items-center justify-between gap-4"
             >
-              <button
-                onClick={onClose}
-                className="group inline-flex items-center gap-3 rounded-2xl border border-white/20 bg-black/60 px-4 py-3 text-white/90 backdrop-blur-xl transition-all duration-300 hover:bg-black/80 hover:border-white/30"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="transition-transform group-hover:-translate-x-0.5">
-                  <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                <span className="font-medium">Back</span>
-              </button>
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={onClose}
+                  className="group inline-flex items-center gap-3 rounded-2xl border border-white/20 bg-black/60 px-4 py-3 text-white/90 backdrop-blur-xl transition-all duration-300 hover:bg-black/80 hover:border-white/30"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="transition-transform group-hover:-translate-x-0.5">
+                    <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <span className="font-medium">Back</span>
+                </button>
+                <div className="hidden md:block">
+                  <div className="text-white/90 font-semibold leading-tight">{title}</div>
+                  {subtitle ? (
+                    <div className="text-white/60 text-sm">{subtitle}</div>
+                  ) : null}
+                </div>
+              </div>
             </motion.div>
 
             {/* List area */}

@@ -135,7 +135,7 @@ export default function PdfModal({
 
               {/* Footer */}
               <div className="flex items-center justify-between gap-3 px-4 md:px-6 py-3 border-t border-white/10 bg-black/40">
-                <p className="text-xs text-white/50">If the PDF doesn't load, use the &quot;Open in new tab&quot; button.</p>
+                <p className="text-xs text-white/50">If the PDF doesn&apos;t load, use the &quot;Open in new tab&quot; button.</p>
                 <a
                   href={encodedSrc}
                   download
