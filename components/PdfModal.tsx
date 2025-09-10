@@ -34,7 +34,7 @@ export default function PdfModal({
     if (!open) return;
     const html = document.documentElement as HTMLElement;
     const body = document.body as HTMLBodyElement;
-    const lenis = (window as any).lenis as { stop?: () => void; start?: () => void } | undefined;
+    const lenis = window.lenis;
 
     const prevHtmlOverflow = html.style.overflow;
     const prevBodyOverflow = body.style.overflow;
@@ -135,7 +135,7 @@ export default function PdfModal({
 
               {/* Footer */}
               <div className="flex items-center justify-between gap-3 px-4 md:px-6 py-3 border-t border-white/10 bg-black/40">
-                <p className="text-xs text-white/50">If the PDF doesn&apos;t load, use the "Open in new tab" button.</p>
+                <p className="text-xs text-white/50">If the PDF doesn't load, use the &quot;Open in new tab&quot; button.</p>
                 <a
                   href={encodedSrc}
                   download
