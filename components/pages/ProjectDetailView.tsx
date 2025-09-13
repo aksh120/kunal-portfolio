@@ -3,7 +3,7 @@
 import NextImage from 'next/image';
 import Link from 'next/link';
 import type { Route } from 'next';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import type { Project, PersonalProject } from '@/lib/projects';
@@ -63,7 +63,7 @@ export default function ProjectDetailView({ project, backHref }: { project: Proj
       const MAX = 60;
 
       const EXCLUDED = new Set(['united colors of benetton', 'u.s. polo assn.', 'superdry', 'pending']);
-      const titleBase = (project as any).title as string | undefined;
+      const titleBase = project.title as string | undefined;
       if (titleBase && EXCLUDED.has(titleBase.toLowerCase())) return;
 
       // Known max table to construct lists without probing
@@ -99,7 +99,7 @@ export default function ProjectDetailView({ project, backHref }: { project: Proj
 
       // Preferred search order depends on context
       let found: string[] = [];
-      const pdfPath = (project as any).pdf as string | undefined;
+      const pdfPath = project.pdf as string | undefined;
       let pdfBase: string | undefined;
       if (pdfPath) {
         const baseWithExt = decodeURIComponent(pdfPath.replace(/^\//, ''));
@@ -110,7 +110,7 @@ export default function ProjectDetailView({ project, backHref }: { project: Proj
       const isInternOrProjects = !isWorks; // internship or personal
 
       // 0) Try to use lists precomputed by AssetPreloader to avoid any probing
-      const gl: Map<string, string[]> | undefined = (globalThis as any).__galleryLookup;
+      const gl: Map<string, string[]> | undefined = globalThis.__galleryLookup;
       const getFromGL = (base?: string) => (base && gl && gl.get(base)) ? gl.get(base)! : undefined;
       if (isInternOrProjects) {
         const byTitle = getFromGL(titleBase);
@@ -174,15 +174,15 @@ export default function ProjectDetailView({ project, backHref }: { project: Proj
     return () => {
       aborted = true;
     };
-  }, [project]);
+  }, [project, backHref]);
 
   const handleBack = () => {
     router.push(backHref);
   };
 
   // Slider controls
-  const goPrev = () => setIdx((i) => (i - 1 + gallery.length) % gallery.length);
-  const goNext = () => setIdx((i) => (i + 1) % gallery.length);
+  const goPrev = useCallback(() => setIdx((i) => (i - 1 + gallery.length) % gallery.length), [gallery.length]);
+  const goNext = useCallback(() => setIdx((i) => (i + 1) % gallery.length), [gallery.length]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -203,8 +203,8 @@ export default function ProjectDetailView({ project, backHref }: { project: Proj
       }
     };
     window.addEventListener('keydown', onKey, { passive: false });
-    return () => window.removeEventListener('keydown', onKey as any);
-  }, [gallery.length]);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [goPrev, goNext]);
 
   return (
     <motion.div className="container-max px-4 md:px-6 py-10 md:py-14" variants={containerVariants} initial="hidden" animate="show">

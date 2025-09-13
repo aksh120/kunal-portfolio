@@ -13,8 +13,7 @@ export default function WorksPage() {
 
   useEffect(() => {
     const goTop = () => {
-      const anyWin = window as unknown as { lenis?: { scrollTo: (t: any, opts?: any) => void } };
-      const lenis = anyWin.lenis;
+      const lenis = (window as Window & { lenis?: { scrollTo: (t: number, opts?: { immediate?: boolean }) => void } }).lenis;
       if (lenis && typeof lenis.scrollTo === 'function') {
         lenis.scrollTo(0, { immediate: true });
       } else {
