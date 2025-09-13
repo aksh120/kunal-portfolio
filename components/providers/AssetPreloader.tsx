@@ -7,16 +7,21 @@ function unique(list: string[]) {
   return Array.from(new Set(list.filter(Boolean)));
 }
 
+type GlobalWithCaches = typeof globalThis & {
+  __probeCache?: Map<string, boolean>;
+  __galleryLookup?: Map<string, string[]>;
+};
+
 function getProbeCache(): Map<string, boolean> {
-  const g = globalThis as any;
+  const g = globalThis as GlobalWithCaches;
   if (!g.__probeCache) g.__probeCache = new Map<string, boolean>();
-  return g.__probeCache as Map<string, boolean>;
+  return g.__probeCache;
 }
 
 function getGalleryLookup(): Map<string, string[]> {
-  const g = globalThis as any;
+  const g = globalThis as GlobalWithCaches;
   if (!g.__galleryLookup) g.__galleryLookup = new Map<string, string[]>();
-  return g.__galleryLookup as Map<string, string[]>;
+  return g.__galleryLookup;
 }
 
 function getKnownMax(base: string): number | undefined {
