@@ -204,12 +204,6 @@ export default function FullscreenGallery({
                   </svg>
                   <span className="font-medium">Back</span>
                 </button>
-                <div className="hidden md:block">
-                  <div className="text-white/90 font-semibold leading-tight">{title}</div>
-                  {subtitle ? (
-                    <div className="text-white/60 text-sm">{subtitle}</div>
-                  ) : null}
-                </div>
               </div>
             </motion.div>
 

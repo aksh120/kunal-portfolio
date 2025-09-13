@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 //import Footer from '@/components/Footer';
 import LenisProvider from '@/components/providers/LenisProvider';
 import AppShell from '@/components/providers/AppShell';
+import AssetPreloader from '@/components/providers/AssetPreloader';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const space = Space_Grotesk({ subsets: ['latin'], variable: '--font-space' });
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className="dark">
       <body className={`${inter.variable} ${space.variable} font-sans bg-background`}>        
         <LenisProvider>
+          <AssetPreloader />
           <Header />
           <AppShell splashMinDuration={3000} oncePerSession={false}>
             <main>{children}</main>

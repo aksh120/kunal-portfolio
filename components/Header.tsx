@@ -1,6 +1,9 @@
 "use client";
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import type { Route } from 'next';
 import ResumeModal from '@/components/ResumeModal';
 
 type NavItem = { href: string; label: string; action?: 'resume' };
@@ -17,6 +20,7 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [resumeOpen, setResumeOpen] = useState(false);
+  const pathname = usePathname();
   
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -42,20 +46,39 @@ export default function Header() {
 
   const onNavClick = (e: React.MouseEvent<HTMLAnchorElement>, item: NavItem) => {
     const { href, action } = item;
-    if (!href.startsWith('#')) return;
-    e.preventDefault();
-    setOpen(false);
-    // Special behavior: open the in-app Resume modal and let it scroll the background to #about
+    const isHash = href.startsWith('#');
+    const onHome = pathname === '/';
+
+    // If RESUME
     if (action === 'resume') {
-      setResumeOpen(true);
+      if (onHome) {
+        // open modal and smooth scroll to #about on homepage
+        e.preventDefault();
+        setOpen(false);
+        setResumeOpen(true);
+        const lenis = window.lenis;
+        if (lenis) lenis.scrollTo('#about', { offset: -80 });
+        else {
+          const target = document.querySelector('#about') as HTMLElement | null;
+          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+      // On subpages let the default navigation to '/#about' happen
       return;
     }
-    const lenis = window.lenis;
-    if (lenis) {
-      lenis.scrollTo(href, { offset: -80 });
-    } else {
-      const target = document.querySelector(href) as HTMLElement | null;
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Other hash links
+    if (isHash && onHome) {
+      // Smooth scroll only when already on homepage
+      e.preventDefault();
+      setOpen(false);
+      const lenis = window.lenis;
+      if (lenis) {
+        lenis.scrollTo(href, { offset: -80 });
+      } else {
+        const target = document.querySelector(href) as HTMLElement | null;
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
   };
   
@@ -70,25 +93,29 @@ export default function Header() {
       >
       <div className="container-max">
         <div className="flex items-center justify-between py-4 md:py-6 px-2 sm:px-0">
-          <a 
-            href="#home" 
-            onClick={(e) => onNavClick(e, { href: '#home', label: 'HOME' })} 
+          <Link 
+            href={'/' as Route}
             className="font-extrabold tracking-[0.2em] text-white/90"
           >
             KUNAL
-          </a>
+          </Link>
           
           <nav className="hidden md:flex items-center gap-5 md:gap-8">
-            {nav.map(n => (
-              <a 
-                key={n.href} 
-                href={n.href} 
-                onClick={(e) => onNavClick(e, n)} 
-                className="text-[15px] font-medium tracking-wide text-white/80 hover:text-white transition-colors"
-              >
-                {n.label}
-              </a>
-            ))}
+            {nav.map(n => {
+              const computedHref = (n.action === 'resume')
+                ? ('/#about')
+                : (n.href.startsWith('#') ? (`/${n.href}`) : n.href);
+              return (
+                <Link
+                  key={n.href}
+                  href={computedHref as Route}
+                  onClick={(e) => onNavClick(e, n)}
+                  className="text-[15px] font-medium tracking-wide text-white/80 hover:text-white transition-colors"
+                >
+                  {n.label}
+                </Link>
+              );
+            })}
           </nav>
           
           {/* Mobile hamburger */}
@@ -152,7 +179,7 @@ export default function Header() {
               {nav.map((n, idx) => (
                 <motion.a
                   key={n.href}
-                  href={n.href}
+                  href={(n.action === 'resume' ? '/#about' : (n.href.startsWith('#') ? `/${n.href}` : n.href))}
                   onClick={(e) => onNavClick(e, n)}
                   initial={{ opacity: 0, y: 8 }}
                   animate={open ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}

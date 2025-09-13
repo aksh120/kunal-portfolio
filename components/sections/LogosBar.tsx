@@ -14,12 +14,12 @@ export default function LogosBar() {
     (async () => {
       const base = "/software_logos/";
       const desired: { label: string; candidates: string[] }[] = [
-        { label: "Rhino 7", candidates: [""] },
-        { label: "Fusion 360", candidates: [""] },
-        { label: "Keyshot", candidates: [""] },
-        { label: "Illustrator", candidates: [""] },
-        { label: "Photoshop", candidates: [""] },
-        { label: "Figma", candidates: [""] },
+        { label: "Rhino 7", candidates: [] },
+        { label: "Fusion 360", candidates: [] },
+        { label: "Keyshot", candidates: [] },
+        { label: "Illustrator", candidates: [] },
+        { label: "Photoshop", candidates: [] },
+        { label: "Figma", candidates: [] },
       ];
 
       const results: Logo[] = [];
@@ -28,6 +28,7 @@ export default function LogosBar() {
         let foundSrc: string | undefined;
         // 1) Try named candidates
         for (const file of item.candidates) {
+          if (!file) continue; // skip empty entries to avoid '/software_logos' HEAD 404s
           const url = base + file;
           try {
             const res = await fetch(url, { method: "HEAD" });

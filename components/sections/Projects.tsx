@@ -1,75 +1,28 @@
 "use client";
 
 import Image from 'next/image';
-import { useState } from 'react';
+import Link from 'next/link';
+import type { Route } from 'next';
 import { MotionDiv, SweepLine, SectionSpotlights } from './primitives';
 import SectionHeader from '@/components/SectionHeader';
-import PdfModal from '@/components/PdfModal';
 
-type ProjectItem = {
-  title: string;
-  tag: string;
-  image: string;
-  pdf?: string;
-};
-
-const projects: ProjectItem[] = [
-  {
-    title: 'PENDING',
-    tag: 'Product Design',
-    image: 'https://i.ibb.co/FLqxFFQh/Beatcubes.jpg',
-  },
-  {
-    title: 'Beatcubes',
-    tag: 'Product Design',
-    image: 'https://i.ibb.co/FLqxFFQh/Beatcubes.jpg',
-    pdf: '/Beatcubes.pdf',
-  },
-  {
-    title: 'Smart Waste Management System',
-    tag: 'Product Design',
-    image: 'https://i.ibb.co/8gws2TB4/Smart-waste-management-system.jpg',
-    pdf: '/Smart waste management system.pdf',
-  },
-  {
-    title: 'Redluffy',
-    tag: 'Transportation Design',
-    image: 'https://i.ibb.co/spbVnF3L/Redluffy.jpg',
-    pdf: '/Redluffy.pdf',
-  },
-];
+import { getPersonalProjects, type PersonalProject } from '@/lib/projects';
 
 export default function Projects() {
-  const [pdfSrc, setPdfSrc] = useState<string | null>(null);
-  const [pdfTitle, setPdfTitle] = useState<string>('Document');
+  const projects: PersonalProject[] = getPersonalProjects();
   return (
     <section id="projects" className="section relative">
       <SectionHeader title="Projects" align="center" />
       <SectionSpotlights />
       <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
         {projects.map((p, i) => (
-          <MotionDiv
-            key={p.title}
-            className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition-all duration-300 will-change-transform hover:-translate-y-1 hover:shadow-[0_24px_80px_rgba(0,0,0,0.55)] ${p.pdf ? 'cursor-pointer' : ''}`}
-            y={16}
-            delay={i * 0.03}
-            whileHover={{ scale: 1.01 }}
-            onClick={() => {
-              if (!p.pdf) return;
-              setPdfSrc(p.pdf);
-              setPdfTitle(p.title);
-            }}
-            role={p.pdf ? 'button' : undefined}
-            tabIndex={p.pdf ? 0 : undefined}
-            onKeyDown={(e) => {
-              if (!p.pdf) return;
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                setPdfSrc(p.pdf);
-                setPdfTitle(p.title);
-              }
-            }}
-          >
+          <Link key={p.slug} href={`/projects/${p.slug}` as Route} className="group block">
+            <MotionDiv
+              className={`relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition-all duration-300 will-change-transform group-hover:-translate-y-1 group-hover:shadow-[0_24px_80px_rgba(0,0,0,0.55)]`}
+              y={16}
+              delay={i * 0.03}
+              whileHover={{ scale: 1.01 }}
+            >
             <SweepLine position="top" color="orange" />
             {/* Image */}
             <div className="relative aspect-[4/3]">
@@ -103,7 +56,7 @@ export default function Projects() {
             <div className="absolute inset-x-0 bottom-0 p-4">
               <div className="flex items-center justify-between rounded-xl border border-white/10 bg-black/40 px-4 py-3 backdrop-blur-md transition-colors duration-300 group-hover:border-white/20">
                 <h2 className="font-semibold tracking-tight">{p.title}</h2>
-                <span className="inline-flex items-center gap-1 text-sm text-white/80">
+                <span className="inline-flex items-center gap-1 text-sm text-white/80 group-hover:text-white" aria-hidden>
                   View
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-80">
                     <path d="M7 17L17 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
@@ -112,10 +65,10 @@ export default function Projects() {
                 </span>
               </div>
             </div>
-          </MotionDiv>
+            </MotionDiv>
+          </Link>
         ))}
       </div>
-      <PdfModal open={!!pdfSrc} onClose={() => setPdfSrc(null)} src={pdfSrc ?? '/Beatcubes.pdf'} title={pdfTitle} />
     </section>
   );
 }
