@@ -47,7 +47,7 @@ export default function WorksPage() {
           <div className="md:absolute md:inset-0 md:grid md:place-items-center pointer-events-none">
             <header className="text-center pointer-events-auto">
               <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">Professional Work</h1>
-              <p className="text-foreground/70 mt-2">Hands-on works built while working with clients and teams.</p>
+              <p className="text-foreground/70 mt-2">Dive into global brands projects crafted with color, material, and finish.</p>
             </header>
           </div>
           
@@ -57,7 +57,14 @@ export default function WorksPage() {
           {projects.map((p) => (
             <Link key={p.slug} href={`/works/${p.slug}` as Route} className="block group relative overflow-hidden rounded-2xl md:rounded-3xl border border-white/10 bg-black/40 shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
               <div className="relative aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9]">
-                <Image src={p.image} alt={p.title} fill sizes="(min-width: 768px) 1200px, 100vw" className="object-cover transition-transform duration-500 md:group-hover:scale-[1.02]" />
+                <Image
+                  src={p.image}
+                  alt={p.title}
+                  fill
+                  sizes="(min-width: 1280px) 1280px, (min-width: 768px) 1024px, 100vw"
+                  quality={60}
+                  className="object-cover transition-transform duration-500 md:group-hover:scale-[1.02]"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 md:bottom-6 md:left-6 z-[2] inline-flex items-center gap-2 sm:gap-3 rounded-xl sm:rounded-2xl border border-white/20 bg-black/55 px-3 py-1.5 sm:px-4 sm:py-2 backdrop-blur-md">
                   <div className="hidden sm:grid h-8 w-8 rounded-lg place-items-center bg-white text-black font-bold">{(p.brand ?? p.title).trim().charAt(0)}</div>
@@ -66,12 +73,7 @@ export default function WorksPage() {
                     <div className="text-white/60 text-[10px] sm:text-[11px] uppercase tracking-widest">{p.tag}</div>
                   </div>
                 </div>
-                {/* NDA footnote (hide on small screens) */}
-                <div className="hidden md:block absolute top-3 right-4 md:top-4 md:right-6 z-[2]">
-                  <span className="rounded-lg border border-white/15 bg-black/45 px-3 py-1 text-[11px] text-white/70 backdrop-blur">
-                    Few work projects can be showcased privately as they are not launched yet or under NDA*
-                  </span>
-                </div>
+                {/* NDA footnote removed per request */}
               </div>
             </Link>
           ))}

@@ -52,7 +52,14 @@ export default function InternshipPage() {
           {projects.map((p) => (
             <Link key={p.slug} href={`/internship/${p.slug}` as Route} className="block group relative overflow-hidden rounded-3xl border border-white/10 bg-black/40 shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
               <div className="relative aspect-[16/9] md:aspect-[21/9]">
-                <Image src={p.image} alt={p.title} fill sizes="(min-width: 768px) 1200px, 100vw" className="object-cover transition-transform duration-500 group-hover:scale-[1.02]" />
+                <Image
+                  src={p.image}
+                  alt={p.title}
+                  fill
+                  sizes="(min-width: 1280px) 1280px, (min-width: 768px) 1024px, 100vw"
+                  quality={60}
+                  className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6 z-[2] inline-flex items-center gap-3 rounded-2xl border border-white/20 bg-black/55 px-4 py-2 backdrop-blur-md">
                   <div className="h-8 w-8 rounded-lg grid place-items-center bg-white text-black font-bold">{(p.brand ?? p.title).trim().charAt(0)}</div>
@@ -61,12 +68,7 @@ export default function InternshipPage() {
                     <div className="text-white/60 text-[11px] uppercase tracking-widest">{p.tag}</div>
                   </div>
                 </div>
-                {/* NDA footnote (hide on small screens) */}
-                <div className="hidden md:block absolute top-3 right-4 md:top-4 md:right-6 z-[2]">
-                  <span className="rounded-lg border border-white/15 bg-black/45 px-3 py-1 text-[11px] text-white/70 backdrop-blur">
-                    Few work projects can be showcased privately as they are not launched yet or under NDA*
-                  </span>
-                </div>
+                {/* NDA footnote removed per request */}
               </div>
             </Link>
           ))}

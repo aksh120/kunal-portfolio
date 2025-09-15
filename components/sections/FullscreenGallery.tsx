@@ -47,21 +47,23 @@ export default function FullscreenGallery({
 
   // Native scroll list; no slide variants needed
 
-  // Preload all gallery images on mount so first visit has no delay
+  // Light-weight warmup: only preload a few cover images with low priority
   useEffect(() => {
     if (!projects || projects.length === 0) return;
     if (typeof window === 'undefined') return;
+    const limit = 6;
     const imgs: HTMLImageElement[] = [];
-    for (const p of projects) {
+    for (let i = 0; i < Math.min(limit, projects.length); i++) {
+      const p = projects[i];
       if (!p?.image) continue;
       const img = new window.Image() as HTMLImageElement & { fetchPriority?: 'high' | 'low' | 'auto' };
       img.decoding = 'async';
-      img.fetchPriority = 'high';
-      img.loading = 'eager';
+      img.fetchPriority = 'low';
+      img.loading = 'lazy';
       img.src = p.image;
       imgs.push(img);
     }
-    // No special teardown required; keep cache warm
+    // No special teardown required
   }, [projects]);
 
   // Close on ESC and lock background scroll while allowing overlay to scroll
@@ -239,9 +241,9 @@ export default function FullscreenGallery({
                         src={failed.has(i) ? '/hero-bg.jpg' : project.image}
                         alt={project.title}
                         fill
-                        sizes="(min-width: 768px) 1024px, 100vw"
+                        sizes="(min-width: 1280px) 1280px, (min-width: 768px) 1024px, 100vw"
+                        quality={60}
                         className="object-cover"
-                        unoptimized
                         onError={() => setFailed((prev) => new Set(prev).add(i))}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />

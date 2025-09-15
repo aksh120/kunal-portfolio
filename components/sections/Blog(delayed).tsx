@@ -32,7 +32,14 @@ export default function Blog() {
           <MotionDiv key={p.title} className="group relative overflow-hidden rounded-xl border border-border bg-muted/40 hover-glow" y={14} delay={i * 0.04}>
             <SweepLine position="top" color="orange" />
             <div className="relative aspect-[4/3]">
-              <Image src={p.image} alt={p.title} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
+              <Image
+                src={p.image}
+                alt={p.title}
+                fill
+                sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                quality={60}
+                className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+              />
             </div>
             <div className="p-4">
               <p className="text-xs uppercase tracking-wide text-foreground/60">{p.date}</p>

@@ -41,16 +41,11 @@ function getKnownMax(base: string): number | undefined {
 
 async function discoverFromBase(base: string, max = 60): Promise<string[]> {
   const folder = base.toLowerCase();
-  const known = getKnownMax(base);
-  if (known !== undefined) {
-    const list = Array.from({ length: known }, (_, i) => `/${folder}/${base}-images-${i}.jpg`);
-    getGalleryLookup().set(base, list);
-    return list;
-  }
+  const limit = getKnownMax(base) ?? max;
   const first = `/${folder}/${base}-images-0.jpg`;
   if (!(await probeImage(first))) return [];
   const found: string[] = [first];
-  for (let i = 1; i < max; i++) {
+  for (let i = 1; i < limit; i++) {
     const candidate = `/${folder}/${base}-images-${i}.jpg`;
     // eslint-disable-next-line no-await-in-loop
     const ok = await probeImage(candidate);
@@ -99,22 +94,18 @@ async function discoverFromPdf(pdfPath: string, max = 60): Promise<string[]> {
   const baseWithExt = decodeURIComponent(pdfPath.replace(/^\//, ''));
   const base = baseWithExt.replace(/\.pdf$/i, '');
   const folder = base.toLowerCase();
-  const known = getKnownMax(base);
-  if (known !== undefined) {
-    const list = Array.from({ length: known }, (_, i) => `/${folder}/${base}-images-${i}.jpg`);
-    getGalleryLookup().set(base, list);
-    return list;
-  }
+  const limit = getKnownMax(base) ?? max;
   const first = `/${folder}/${base}-images-0.jpg`;
   if (!(await probeImage(first))) return [];
   const found: string[] = [first];
-  for (let i = 1; i < max; i++) {
+  for (let i = 1; i < limit; i++) {
     const candidate = `/${folder}/${base}-images-${i}.jpg`;
     // eslint-disable-next-line no-await-in-loop
     const ok = await probeImage(candidate);
     if (!ok) break;
     found.push(candidate);
   }
+  getGalleryLookup().set(base, found);
   return found;
 }
 
@@ -150,40 +141,60 @@ export default function AssetPreloader() {
   useEffect(() => {
     let cancelled = false;
     const headLinks: HTMLLinkElement[] = [];
-    const imgs: (HTMLImageElement & { fetchPriority?: 'high' | 'low' | 'auto' })[] = [];
+    // Limit overall preloads and use small optimized variants
+    const MAX_PRELOAD = 24;
+
+    const toOptimized = (url: string, w = 640, q = 40) => {
+      try {
+        const encoded = encodeURIComponent(url);
+        return `/_next/image?url=${encoded}&w=${w}&q=${q}`;
+      } catch {
+        return url; // fallback
+      }
+    };
+
+    const preferIndexZeroOnly = (list: string[]) => {
+      const out: string[] = [];
+      const seenBase = new Set<string>();
+      for (const u of list) {
+        const m = u.match(/^(.*)-images-(\d+)\.jpg$/i);
+        if (m) {
+          const base = m[1];
+          const idx = Number(m[2]);
+          if (idx === 0 && !seenBase.has(base)) {
+            seenBase.add(base);
+            out.push(u);
+          }
+        } else {
+          out.push(u);
+        }
+      }
+      return out;
+    };
 
     (async () => {
       const urls = await collectAllImageUrls();
       if (cancelled) return;
 
-      // Preload via <link rel="preload" as="image" href="..." /> for ALL
-      for (const url of urls) {
+      // Keep only representative images and limit count
+      const filtered = preferIndexZeroOnly(urls).slice(0, MAX_PRELOAD);
+
+      // Preload via <link rel="preload" as="image" href="optimized" />
+      for (const url of filtered) {
         try {
           const link = document.createElement('link');
           link.rel = 'preload';
           link.as = 'image';
-          link.href = url;
+          link.href = toOptimized(url, 640, 40);
           document.head.appendChild(link);
           headLinks.push(link);
-        } catch {}
-      }
-
-      // Also warm the cache with Image instances (low priority to avoid jank)
-      for (const url of urls) {
-        try {
-          const img = new window.Image() as HTMLImageElement & { fetchPriority?: 'high' | 'low' | 'auto' };
-          img.decoding = 'async';
-          img.fetchPriority = 'low';
-          img.loading = 'eager';
-          img.src = url;
-          imgs.push(img);
         } catch {}
       }
     })();
 
     return () => {
       cancelled = true;
-      // Clean up preload links (images remain cached)
+      // Clean up preload links (images remain cached by the browser)
       for (const link of headLinks) {
         try { document.head.removeChild(link); } catch {}
       }

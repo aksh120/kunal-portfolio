@@ -79,15 +79,23 @@ export default function ProjectDetailView({ project, backHref }: { project: Proj
         return table[base];
       };
 
-      // Discover using folder base and file base separately (stop after first miss)
-      const discoverPair = async (folderBase: string, fileBase: string) => {
+      // Helpers to handle filename base casing differences
+      const toSentenceCase = (s: string) => s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : s;
+      // Discover using folder base and candidate file bases (stop after first miss)
+      const discoverPair = async (folderBase: string, primaryFileBase: string) => {
         const folder = folderBase.toLowerCase();
-        const first = `/${folder}/${fileBase}-images-0.jpg`;
-        // eslint-disable-next-line no-await-in-loop
-        if (!(await probeImage(first))) return [];
-        const acc: string[] = [first];
+        const candidates = [primaryFileBase, toSentenceCase(primaryFileBase), primaryFileBase.toLowerCase()].filter(Boolean);
+        let workingBase: string | null = null;
+        for (const fb of candidates) {
+          const first = `/${folder}/${fb}-images-0.jpg`;
+          // eslint-disable-next-line no-await-in-loop
+          if (await probeImage(first)) { workingBase = fb; break; }
+        }
+        if (!workingBase) return [];
+        const firstOk = `/${folder}/${workingBase}-images-0.jpg`;
+        const acc: string[] = [firstOk];
         for (let i = 1; i < MAX; i++) {
-          const candidate = `/${folder}/${fileBase}-images-${i}.jpg`;
+          const candidate = `/${folder}/${workingBase}-images-${i}.jpg`;
           // eslint-disable-next-line no-await-in-loop
           const ok = await probeImage(candidate);
           if (aborted) return [];
@@ -233,7 +241,7 @@ export default function ProjectDetailView({ project, backHref }: { project: Proj
       {/* Hero */}
       <motion.div variants={heroVariant} className="relative w-full overflow-hidden rounded-2xl md:rounded-3xl border border-white/10 bg-black/40 shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
         <div className="relative aspect-[16/9]">
-          <NextImage src={gallery[idx]} alt={project.title} fill sizes="(min-width: 768px) 1200px, 100vw" className="object-cover"/>
+          <NextImage src={gallery[idx]} alt={project.title} fill sizes="(min-width: 768px) 1200px, 100vw" quality={60} className="object-cover"/>
           {/* Slide counter */}
           <div className="absolute left-2 top-2 md:left-3 md:top-3 z-[2]">
             <span className="inline-flex items-center rounded-md border border-white/15 bg-black/45 px-2 py-1 text-[11px] font-medium text-white/90 backdrop-blur">
@@ -248,7 +256,7 @@ export default function ProjectDetailView({ project, backHref }: { project: Proj
                 onClick={goPrev}
                 onMouseDown={(e) => e.preventDefault()}
                 aria-label="Previous slide"
-                className="absolute left-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-full border border-white/15 bg-black/40 p-2 md:p-3 text-white/90 hover:bg-black/60 backdrop-blur"
+                className="absolute left-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-full border border-white/10 bg-black/25 p-2 md:p-3 text-white/80 hover:bg-black/35"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                   <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -259,7 +267,7 @@ export default function ProjectDetailView({ project, backHref }: { project: Proj
                 onClick={goNext}
                 onMouseDown={(e) => e.preventDefault()}
                 aria-label="Next slide"
-                className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-full border border-white/15 bg-black/40 p-2 md:p-3 text-white/90 hover:bg-black/60 backdrop-blur"
+                className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-full border border-white/10 bg-black/25 p-2 md:p-3 text-white/80 hover:bg-black/35"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                   <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -292,25 +300,36 @@ export default function ProjectDetailView({ project, backHref }: { project: Proj
             />
           </div>
         </motion.div>
-        <motion.aside className="lg:col-span-4" variants={fadeUp}>
-          <div className="rounded-2xl border border-white/10 bg-black/30 p-5">
-            <h2 className="text-white/90 font-semibold mb-3">Project Details</h2>
-            {project.details?.year && (
-              <div className="mb-2">
-                <div className="text-white/60 text-xs uppercase tracking-widest">Year</div>
-                <div className="text-white/80">{project.details.year}</div>
+        {/* Conditionally render the right-side details panel.
+            Hide for brand projects under Professional Work per request. */}
+        {(() => {
+          const hideForBrands = new Set(['tommy-hilfiger', 'united-colors-of-benetton', 'us-polo-assn', 'superdry']);
+          const hideForOthers = new Set(['beatcubes', 'smart-waste-management-system', 'redluffy', 'pending']);
+          const isWorks = (backHref as string).includes('works');
+          const shouldHide = (isWorks && hideForBrands.has(project.slug)) || (!isWorks && hideForOthers.has(project.slug));
+          if (shouldHide) return null;
+          return (
+            <motion.aside className="lg:col-span-4" variants={fadeUp}>
+              <div className="rounded-2xl border border-white/10 bg-black/30 p-5">
+                <h2 className="text-white/90 font-semibold mb-3">Project Details</h2>
+                {project.details?.year && (
+                  <div className="mb-2">
+                    <div className="text-white/60 text-xs uppercase tracking-widest">Year</div>
+                    <div className="text-white/80">{project.details.year}</div>
+                  </div>
+                )}
+                {project.details?.services && project.details.services.length > 0 && (
+                  <div className="mb-2">
+                    <div className="text-white/60 text-xs uppercase tracking-widest mb-1">Services</div>
+                    <ul className="list-disc list-inside text-white/80 space-y-1">
+                      {project.details.services.map((s) => (<li key={s}>{s}</li>))}
+                    </ul>
+                  </div>
+                )}
               </div>
-            )}
-            {project.details?.services && project.details.services.length > 0 && (
-              <div className="mb-2">
-                <div className="text-white/60 text-xs uppercase tracking-widest mb-1">Services</div>
-                <ul className="list-disc list-inside text-white/80 space-y-1">
-                  {project.details.services.map((s) => (<li key={s}>{s}</li>))}
-                </ul>
-              </div>
-            )}
-          </div>
-        </motion.aside>
+            </motion.aside>
+          );
+        })()}
       </div>
 
       {project.details?.description && (
@@ -370,7 +389,14 @@ function ThumbScroller({
               i === activeIndex ? 'border-white/60 ring-2 ring-white/20' : 'border-white/10'
             } bg-black/40 snap-center`}
           >
-            <NextImage src={src} alt={`thumb-${i}`} fill className="object-cover" />
+            <NextImage
+              src={src}
+              alt={`thumb-${i}`}
+              fill
+              sizes="(min-width: 768px) 224px, (min-width: 640px) 192px, 160px"
+              quality={60}
+              className="object-cover"
+            />
           </button>
         ))}
       </div>
@@ -381,7 +407,7 @@ function ThumbScroller({
             onClick={() => scrollBy(-1)}
             onMouseDown={(e) => e.preventDefault()}
             aria-label="Scroll thumbnails left"
-            className="absolute left-1 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-full border border-white/15 bg-black/40 p-2 text-white/80 hover:bg-black/60 backdrop-blur"
+            className="absolute left-1 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-full border border-white/10 bg-black/25 p-2 text-white/70 hover:bg-black/35"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
               <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -392,7 +418,7 @@ function ThumbScroller({
             onClick={() => scrollBy(1)}
             onMouseDown={(e) => e.preventDefault()}
             aria-label="Scroll thumbnails right"
-            className="absolute right-1 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-full border border-white/15 bg-black/40 p-2 text-white/80 hover:bg-black/60 backdrop-blur"
+            className="absolute right-1 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-full border border-white/10 bg-black/25 p-2 text-white/70 hover:bg-black/35"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
               <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

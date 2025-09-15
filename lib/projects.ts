@@ -38,7 +38,6 @@ export const professionalProjects: Project[] = [
     pdf: '/THSS25 Luggage.pdf',
     details: {
       year: '2025',
-      services: ['Brand Strategy', 'Visual Identity', 'Typography'],
       images: [
         'https://i.ibb.co/xSVdk6Ss/THSS25.jpg'
       ],
@@ -50,21 +49,30 @@ export const professionalProjects: Project[] = [
     title: 'UNITED COLORS OF BENETTON',
     tag: 'Travel Gear',
     image: 'https://i.ibb.co/RkpP88XZ/UCB.png',
-    brand: 'UCB'
+    brand: 'UCB',
+    details: {
+      year: '2025'
+    }
   },
   {
     slug: 'us-polo-assn',
     title: 'U.S. POLO ASSN.',
     tag: 'Travel Gear',
     image: 'https://i.ibb.co/1f8gkShk/USPA.png',
-    brand: 'USPA'
+    brand: 'USPA',
+    details: {
+      year: '2024'
+    }
   },
   {
     slug: 'superdry',
     title: 'Superdry',
     tag: 'Travel Gear',
     image: 'https://i.ibb.co/ZzH1cBDS/Superdry.png',
-    brand: 'Superdry'
+    brand: 'Superdry',
+    details: {
+      year: '2025'
+    }
   }
 ];
 
@@ -91,15 +99,21 @@ export const internshipProjects: Project[] = [
     tag: 'Furniture Design',
     image: 'https://i.ibb.co/8gj9wRcx/P1.jpg',
     brand: 'Kunal Kamde',
-    pdf: '/P1.pdf'
+    pdf: '/P1.pdf',
+    details: {
+      year: '2022'
+    }
   },
   {
     slug: 'project-2',
     title: 'Project 2',
-    tag: 'General',
+    tag: 'FURNITURE DESIGN',
     image: 'https://i.ibb.co/zV8GLDLc/p2.jpg',
     brand: 'Kunal Kamde',
-    pdf: '/P2.pdf'
+    pdf: '/P2.pdf',
+    details: {
+      year: '2022'
+    }
   }
 ];
 
@@ -117,7 +131,7 @@ export const personalProjects: PersonalProject[] = [
     image: 'https://i.ibb.co/FLqxFFQh/Beatcubes.jpg',
     pdf: '/Beatcubes.pdf',
     details: {
-      year: '2024',
+      year: '2023',
       images: ['https://i.ibb.co/FLqxFFQh/Beatcubes.jpg'],
       description: 'Selected explorations and prototypes.'
     }
@@ -128,6 +142,9 @@ export const personalProjects: PersonalProject[] = [
     tag: 'Product Design',
     image: 'https://i.ibb.co/8gws2TB4/Smart-waste-management-system.jpg',
     pdf: '/Smart waste management system.pdf',
+    details: {
+      year: '2022'
+    }
   },
   {
     slug: 'redluffy',
@@ -135,6 +152,9 @@ export const personalProjects: PersonalProject[] = [
     tag: 'Transportation Design',
     image: 'https://i.ibb.co/spbVnF3L/Redluffy.jpg',
     pdf: '/Redluffy.pdf',
+    details: {
+      year: '2022'
+    }
   },
 ];
 

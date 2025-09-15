@@ -66,8 +66,8 @@ export default function LogosBar() {
                         alt={l.label}
                         fill
                         sizes="48px"
+                        quality={70}
                         className="object-contain p-1.5"
-                        unoptimized
                         priority={i < 6}
                       />
                     ) : (

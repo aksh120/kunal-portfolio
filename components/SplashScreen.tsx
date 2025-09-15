@@ -95,46 +95,54 @@ export default function SplashScreen({ onDone, minDuration = 1500 }: { onDone: (
       </div>
 
       {/* Brand wordmark with kinetic reveal */}
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[58%] select-none">
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none">
         <motion.h1
           initial={{ letterSpacing: "0.4em", opacity: 0, y: 20 }}
           animate={{ letterSpacing: "0.12em", opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="text-[12vw] md:text-[8vw] font-extrabold tracking-[0.12em] bg-gradient-to-b from-white via-white to-white/70 bg-clip-text text-transparent drop-shadow-[0_6px_22px_rgba(238,72,24,0.18)]"
+          className="text-[12vw] md:text-[8vw] font-extrabold tracking-[0.12em] bg-gradient-to-b from-white via-white to-white/70 bg-clip-text text-transparent drop-shadow-[0_6px_22px_rgba(238,72,24,0.18)] text-center"
         >
           KUNAL
         </motion.h1>
+        
+        {/* Progress bar between title and keywords */}
+        <motion.div
+          initial={{ opacity: 0, scaleX: 0 }}
+          animate={{ opacity: 1, scaleX: 1 }}
+          transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-4 md:mt-5 mx-auto w-[60vw] max-w-sm"
+        >
+          <div className="relative h-1.5 rounded-full bg-white/10 overflow-hidden">
+            <motion.div
+              className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#ee4818] via-white to-[#ee4818]"
+              initial={{ width: "0%" }}
+              animate={{ width: "100%" }}
+              transition={{ duration: Math.max(minDuration / 1000, 1.2), ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
+            />
+          </div>
+        </motion.div>
+        
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.6 }}
-          className="mt-3 md:mt-4 text-center text-white/60 tracking-widest text-[11px] md:text-xs"
+          transition={{ duration: 0.7, delay: 0.8 }}
+          className="mt-3 md:mt-4 text-center text-white/60 tracking-widest text-[11px] md:text-xs whitespace-nowrap"
         >
           Design Thinking, 3D modeling, Innovation
         </motion.div>
       </div>
 
-      {/* Progress indicator with shimmer dots */}
-      <div className="absolute left-1/2 top-[58%] -translate-x-1/2 w-[64vw] max-w-md">
-        <div className="relative h-2 rounded-full bg-white/10 overflow-hidden">
-          <motion.div
-            className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#ee4818] via-white to-[#ee4818]"
-            initial={{ width: "0%" }}
-            animate={{ width: "100%" }}
-            transition={{ duration: Math.max(minDuration / 1000, 1.2), ease: [0.16, 1, 0.3, 1] }}
+      {/* Shimmer dots around the center */}
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vmin] h-[70vmin]">
+        {sparks.map((s, i) => (
+          <motion.span
+            key={i}
+            className="absolute rounded-full bg-white/70 shadow-[0_0_18px_rgba(255,255,255,0.7)]"
+            style={{ top: `${s.top}%`, left: `${s.left}%`, width: s.size, height: s.size }}
+            animate={prefersReduced ? undefined : { opacity: [0, 1, 0] }}
+            transition={{ duration: 1.2, delay: s.delay, repeat: Infinity, ease: "easeInOut" }}
           />
-        </div>
-        <div className="relative mt-3 h-6">
-          {sparks.map((s, i) => (
-            <motion.span
-              key={i}
-              className="absolute rounded-full bg-white/70 shadow-[0_0_18px_rgba(255,255,255,0.7)]"
-              style={{ top: `${s.top}%`, left: `${s.left}%`, width: s.size, height: s.size }}
-              animate={prefersReduced ? undefined : { opacity: [0, 1, 0] }}
-              transition={{ duration: 1.2, delay: s.delay, repeat: Infinity, ease: "easeInOut" }}
-            />
-          ))}
-        </div>
+        ))}
       </div>
 
       {/* Exit mask reveal */}
