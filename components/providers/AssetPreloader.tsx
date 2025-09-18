@@ -144,12 +144,16 @@ export default function AssetPreloader() {
     // Limit overall preloads and use small optimized variants
     const MAX_PRELOAD = 24;
 
-    const toOptimized = (url: string, w = 640, q = 40) => {
+    const toOptimized = (url: string, w = 640, q = 50) => {
       try {
+        // If the path contains spaces, some hosts return 400 for _next/image.
+        // In that case, fallback to the raw image path for preload.
+        const decoded = decodeURIComponent(url);
+        if (/\s/.test(decoded)) return url;
         const encoded = encodeURIComponent(url);
         return `/_next/image?url=${encoded}&w=${w}&q=${q}`;
       } catch {
-        return url; // fallback
+        return url; // safest fallback
       }
     };
 

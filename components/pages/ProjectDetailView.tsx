@@ -33,6 +33,14 @@ export default function ProjectDetailView({ project, backHref }: { project: Proj
       transition: { staggerChildren: 0.06, delayChildren: 0.05 },
     },
   } as const;
+
+  const hasSpaces = (u: string) => {
+    try {
+      return decodeURIComponent(u).includes(' ');
+    } catch {
+      return u.includes('%20');
+    }
+  };
   const fadeUp = {
     hidden: { opacity: 0, y: 12 },
     show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] } },
@@ -241,7 +249,7 @@ export default function ProjectDetailView({ project, backHref }: { project: Proj
       {/* Hero */}
       <motion.div variants={heroVariant} className="relative w-full overflow-hidden rounded-2xl md:rounded-3xl border border-white/10 bg-black/40 shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
         <div className="relative aspect-[16/9]">
-          <NextImage src={gallery[idx]} alt={project.title} fill sizes="(min-width: 768px) 1200px, 100vw" quality={60} className="object-cover"/>
+          <NextImage src={gallery[idx]} alt={project.title} fill sizes="(min-width: 768px) 1200px, 100vw" quality={60} className="object-cover" unoptimized={hasSpaces(gallery[idx])}/>
           {/* Slide counter */}
           <div className="absolute left-2 top-2 md:left-3 md:top-3 z-[2]">
             <span className="inline-flex items-center rounded-md border border-white/15 bg-black/45 px-2 py-1 text-[11px] font-medium text-white/90 backdrop-blur">
@@ -353,6 +361,15 @@ function ThumbScroller({
   const ref = useRef<HTMLDivElement | null>(null);
   const itemRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
+  // Local helper to detect spaces in URL to bypass Next optimizer for such paths
+  const hasSpacesLocal = (u: string) => {
+    try {
+      return decodeURIComponent(u).includes(' ');
+    } catch {
+      return u.includes('%20');
+    }
+  };
+
   // Auto-center the active thumbnail (horizontal only, do NOT scroll the page)
   useEffect(() => {
     const c = ref.current;
@@ -396,6 +413,7 @@ function ThumbScroller({
               sizes="(min-width: 768px) 224px, (min-width: 640px) 192px, 160px"
               quality={60}
               className="object-cover"
+              unoptimized={hasSpacesLocal(src)}
             />
           </button>
         ))}
