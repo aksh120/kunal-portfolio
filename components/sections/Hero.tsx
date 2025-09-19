@@ -147,7 +147,7 @@ export default function Hero() {
                       src="/kunal.jpg"
                       alt="Kunal — Hero portrait"
                       fill
-                      className="object-cover object-[40%_35%] scale-x-[-1]"
+                      className="object-cover object-[40%_35%]"
                       sizes="(min-width: 1024px) 420px, (min-width: 768px) 45vw, 90vw"
                       priority
                     />

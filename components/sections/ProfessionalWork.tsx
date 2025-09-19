@@ -31,7 +31,7 @@ export default function ProfessionalWork() {
             <div className="relative px-8 py-16 md:px-16 md:py-24">
               <div className="mx-auto max-w-3xl text-center">
                 <h3 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-3">Professional<br className="md:hidden" /> Work</h3>
-                <p className="text-foreground/70">Dive into selected client projects crafted with strategy, systems, and motion.</p>
+                <p className="text-foreground/70">Dive into global brands projects crafted with color, material, and finish.</p>
                 <div className="mt-8 inline-flex items-center gap-2 rounded-xl border border-white/15 bg-black/40 px-4 py-2 text-sm backdrop-blur">
                   <span className="opacity-80">View {count} projects</span>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="opacity-80">
