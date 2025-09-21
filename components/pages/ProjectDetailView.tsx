@@ -391,6 +391,12 @@ function ThumbScroller({
     c.scrollBy({ left: dir * delta, behavior: 'smooth' });
   };
 
+  // Change selected slide and let the effect above auto-center the thumbnail
+  const changeSlide = (dir: -1 | 1) => {
+    const next = (activeIndex + dir + images.length) % images.length;
+    onSelect(next);
+  };
+
   return (
     <div className="relative">
       <div
@@ -422,7 +428,7 @@ function ThumbScroller({
         <>
           <button
             type="button"
-            onClick={() => scrollBy(-1)}
+            onClick={() => changeSlide(-1)}
             onMouseDown={(e) => e.preventDefault()}
             aria-label="Scroll thumbnails left"
             className="absolute left-1 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-full border border-white/10 bg-black/25 p-2 text-white/70 hover:bg-black/35"
@@ -433,7 +439,7 @@ function ThumbScroller({
           </button>
           <button
             type="button"
-            onClick={() => scrollBy(1)}
+            onClick={() => changeSlide(1)}
             onMouseDown={(e) => e.preventDefault()}
             aria-label="Scroll thumbnails right"
             className="absolute right-1 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-full border border-white/10 bg-black/25 p-2 text-white/70 hover:bg-black/35"

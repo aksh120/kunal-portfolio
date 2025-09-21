@@ -40,20 +40,33 @@ function getKnownMax(base: string): number | undefined {
 }
 
 async function discoverFromBase(base: string, max = 60): Promise<string[]> {
-  const folder = base.toLowerCase();
   const limit = getKnownMax(base) ?? max;
-  const first = `/${folder}/${base}-images-0.jpg`;
-  if (!(await probeImage(first))) return [];
-  const found: string[] = [first];
-  for (let i = 1; i < limit; i++) {
-    const candidate = `/${folder}/${base}-images-${i}.jpg`;
-    // eslint-disable-next-line no-await-in-loop
-    const ok = await probeImage(candidate);
-    if (!ok) break;
-    found.push(candidate);
+  const folderCandidates = [
+    base.toLowerCase(),
+    base.toLowerCase().replace(/\s+/g, '-'),
+  ];
+  for (const folder of folderCandidates) {
+    const fileBaseCandidates = [base, base.charAt(0) + base.slice(1).toLowerCase(), base.toLowerCase()];
+    let workingBase: string | null = null;
+    for (const fb of fileBaseCandidates) {
+      const firstTry = `/${folder}/${fb}-images-0.jpg`;
+      // eslint-disable-next-line no-await-in-loop
+      if (await probeImage(firstTry)) { workingBase = fb; break; }
+    }
+    if (!workingBase) continue;
+    const first = `/${folder}/${workingBase}-images-0.jpg`;
+    const found: string[] = [first];
+    for (let i = 1; i < limit; i++) {
+      const candidate = `/${folder}/${workingBase}-images-${i}.jpg`;
+      // eslint-disable-next-line no-await-in-loop
+      const ok = await probeImage(candidate);
+      if (!ok) break;
+      found.push(candidate);
+    }
+    getGalleryLookup().set(base, found);
+    return found;
   }
-  getGalleryLookup().set(base, found);
-  return found;
+  return [];
 }
 
 function collectInitialImageUrls(): string[] {
@@ -93,20 +106,33 @@ async function probeImage(src: string): Promise<boolean> {
 async function discoverFromPdf(pdfPath: string, max = 60): Promise<string[]> {
   const baseWithExt = decodeURIComponent(pdfPath.replace(/^\//, ''));
   const base = baseWithExt.replace(/\.pdf$/i, '');
-  const folder = base.toLowerCase();
   const limit = getKnownMax(base) ?? max;
-  const first = `/${folder}/${base}-images-0.jpg`;
-  if (!(await probeImage(first))) return [];
-  const found: string[] = [first];
-  for (let i = 1; i < limit; i++) {
-    const candidate = `/${folder}/${base}-images-${i}.jpg`;
-    // eslint-disable-next-line no-await-in-loop
-    const ok = await probeImage(candidate);
-    if (!ok) break;
-    found.push(candidate);
+  const folderCandidates = [
+    base.toLowerCase(),
+    base.toLowerCase().replace(/\s+/g, '-'),
+  ];
+  for (const folder of folderCandidates) {
+    const fileBaseCandidates = [base, base.charAt(0) + base.slice(1).toLowerCase(), base.toLowerCase()];
+    let workingBase: string | null = null;
+    for (const fb of fileBaseCandidates) {
+      const firstTry = `/${folder}/${fb}-images-0.jpg`;
+      // eslint-disable-next-line no-await-in-loop
+      if (await probeImage(firstTry)) { workingBase = fb; break; }
+    }
+    if (!workingBase) continue;
+    const first = `/${folder}/${workingBase}-images-0.jpg`;
+    const found: string[] = [first];
+    for (let i = 1; i < limit; i++) {
+      const candidate = `/${folder}/${workingBase}-images-${i}.jpg`;
+      // eslint-disable-next-line no-await-in-loop
+      const ok = await probeImage(candidate);
+      if (!ok) break;
+      found.push(candidate);
+    }
+    getGalleryLookup().set(base, found);
+    return found;
   }
-  getGalleryLookup().set(base, found);
-  return found;
+  return [];
 }
 
 async function collectAllImageUrls(): Promise<string[]> {
