@@ -57,9 +57,14 @@ export default function ProjectDetailView({ project, backHref }: { project: Proj
     const probeImage = async (src: string) => {
       if (probeCache.has(src)) return probeCache.get(src)!;
       try {
-        const res = await fetch(src, { method: 'HEAD' });
-        probeCache.set(src, res.ok);
-        return res.ok;
+        const ok = await new Promise<boolean>((resolve) => {
+          const img = new Image();
+          img.onload = () => resolve(true);
+          img.onerror = () => resolve(false);
+          img.src = src;
+        });
+        probeCache.set(src, ok);
+        return ok;
       } catch {
         probeCache.set(src, false);
         return false;
@@ -89,21 +94,25 @@ export default function ProjectDetailView({ project, backHref }: { project: Proj
 
       // Helpers to handle filename base casing differences
       const toSentenceCase = (s: string) => s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : s;
-      // Discover using folder base and candidate file bases (stop after first miss)
+      // Discover using folder base and candidate file bases; also try hyphenated folder names
       const discoverPair = async (folderBase: string, primaryFileBase: string) => {
-        const folder = folderBase.toLowerCase();
-        const candidates = [primaryFileBase, toSentenceCase(primaryFileBase), primaryFileBase.toLowerCase()].filter(Boolean);
-        let workingBase: string | null = null;
-        for (const fb of candidates) {
-          const first = `/${folder}/${fb}-images-0.jpg`;
-          // eslint-disable-next-line no-await-in-loop
-          if (await probeImage(first)) { workingBase = fb; break; }
+        const folderCandidates = [folderBase.toLowerCase(), folderBase.toLowerCase().replace(/\s+/g, '-')];
+        const fileCandidates = [primaryFileBase, toSentenceCase(primaryFileBase), primaryFileBase.toLowerCase()].filter(Boolean);
+        let chosen: { folder: string; fileBase: string } | null = null;
+        for (const folder of folderCandidates) {
+          for (const fb of fileCandidates) {
+            const first = `/${folder}/${fb}-images-0.jpg`;
+            // eslint-disable-next-line no-await-in-loop
+            if (await probeImage(first)) { chosen = { folder, fileBase: fb }; break; }
+          }
+          if (chosen) break;
         }
-        if (!workingBase) return [];
-        const firstOk = `/${folder}/${workingBase}-images-0.jpg`;
-        const acc: string[] = [firstOk];
-        for (let i = 1; i < MAX; i++) {
-          const candidate = `/${folder}/${workingBase}-images-${i}.jpg`;
+        if (!chosen) return [];
+        const { folder, fileBase } = chosen;
+        const limit = getKnownMax(primaryFileBase) ?? MAX;
+        const acc: string[] = [`/${folder}/${fileBase}-images-0.jpg`];
+        for (let i = 1; i < limit; i++) {
+          const candidate = `/${folder}/${fileBase}-images-${i}.jpg`;
           // eslint-disable-next-line no-await-in-loop
           const ok = await probeImage(candidate);
           if (aborted) return [];
@@ -144,15 +153,7 @@ export default function ProjectDetailView({ project, backHref }: { project: Proj
       }
 
       if (isInternOrProjects) {
-        // If we have a known max for the title, build the list directly without probes
-        if (!found.length && titleBase) {
-          const km = getKnownMax(titleBase);
-          if (km !== undefined) {
-            const folder = titleBase.toLowerCase();
-            found = Array.from({ length: km }, (_, i) => `/${folder}/${titleBase}-images-${i}.jpg`);
-          }
-        }
-        // Internship/Personal: likely folder and file follow Title
+        // Internship/Personal: likely folder and file follow Title (but verify and handle casing)
         if (!found.length && titleBase) {
           found = await discoverPair(titleBase, titleBase);
         }
@@ -249,7 +250,7 @@ export default function ProjectDetailView({ project, backHref }: { project: Proj
       {/* Hero */}
       <motion.div variants={heroVariant} className="relative w-full overflow-hidden rounded-2xl md:rounded-3xl border border-white/10 bg-black/40 shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
         <div className="relative aspect-[16/9]">
-          <NextImage src={gallery[idx]} alt={project.title} fill sizes="(min-width: 768px) 1200px, 100vw" quality={60} className="object-cover" unoptimized={hasSpaces(gallery[idx])}/>
+          <NextImage src={encodeURI(gallery[idx])} alt={project.title} fill sizes="(min-width: 768px) 1200px, 100vw" quality={60} className="object-cover" unoptimized={hasSpaces(gallery[idx])}/>
           {/* Slide counter */}
           <div className="absolute left-2 top-2 md:left-3 md:top-3 z-[2]">
             <span className="inline-flex items-center rounded-md border border-white/15 bg-black/45 px-2 py-1 text-[11px] font-medium text-white/90 backdrop-blur">
@@ -413,7 +414,7 @@ function ThumbScroller({
             } bg-black/40 snap-center`}
           >
             <NextImage
-              src={src}
+              src={encodeURI(src)}
               alt={`thumb-${i}`}
               fill
               sizes="(min-width: 768px) 224px, (min-width: 640px) 192px, 160px"

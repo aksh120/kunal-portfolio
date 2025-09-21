@@ -94,9 +94,14 @@ async function probeImage(src: string): Promise<boolean> {
   const cache = getProbeCache();
   if (cache.has(src)) return cache.get(src)!;
   try {
-    const res = await fetch(src, { method: 'HEAD' });
-    cache.set(src, res.ok);
-    return res.ok;
+    const ok = await new Promise<boolean>((resolve) => {
+      const img = new Image();
+      img.onload = () => resolve(true);
+      img.onerror = () => resolve(false);
+      img.src = src;
+    });
+    cache.set(src, ok);
+    return ok;
   } catch {
     cache.set(src, false);
     return false;
