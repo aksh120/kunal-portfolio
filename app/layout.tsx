@@ -13,6 +13,23 @@ const space = Space_Grotesk({ subsets: ['latin'], variable: '--font-space' });
 export const metadata: Metadata = {
   title: 'Kunal Kamde - Portfolio',
   description: 'Product Designer',
+  icons: {
+    icon: '/logo-k.png',
+    apple: '/logo-k.png',
+  },
+  openGraph: {
+    title: 'Kunal Kamde - Portfolio',
+    description: 'Product Designer',
+    images: [
+      {
+        url: '/logo-k.png',
+        width: 1200,
+        height: 1200,
+        alt: 'Kunal Kamde Portfolio Logo',
+      },
+    ],
+    type: 'website',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
